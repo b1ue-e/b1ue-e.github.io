@@ -20,28 +20,35 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="通过识别双曲空间中的骨架预测复杂网络的长期动态性学习复杂的网络动力学是理解、模拟和控制现实世界复杂系统的基础。尽管人们在预测网络节点的未来状态方面做出了巨大努力，但捕捉长期动态的能力在很大程度上仍然有限。这是因为他们忽略了一个事实，即复杂网络的长期动态主要受其固有的低维流形（即骨架）支配。因此，我们提出了动态不变骨架神经网络（DiskNet），它基于双曲空间的重整化群结构来识别复杂网络的骨架，从而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DiskNet">
+<meta property="og:url" content="http://example.com/2024/11/12/DiskNet/index.html">
 <meta property="og:site_name">
+<meta property="og:description" content="通过识别双曲空间中的骨架预测复杂网络的长期动态性学习复杂的网络动力学是理解、模拟和控制现实世界复杂系统的基础。尽管人们在预测网络节点的未来状态方面做出了巨大努力，但捕捉长期动态的能力在很大程度上仍然有限。这是因为他们忽略了一个事实，即复杂网络的长期动态主要受其固有的低维流形（即骨架）支配。因此，我们提出了动态不变骨架神经网络（DiskNet），它基于双曲空间的重整化群结构来识别复杂网络的骨架，从而">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2024/11/12/DiskNet/formula1.png">
+<meta property="article:published_time" content="2024-11-12T07:35:05.000Z">
+<meta property="article:modified_time" content="2024-11-12T07:45:26.666Z">
 <meta property="article:author" content="Blue">
+<meta property="article:tag" content="PaperReading">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/11/12/DiskNet/formula1.png">
 
-<link rel="canonical" href="http://example.com/">
+<link rel="canonical" href="http://example.com/2024/11/12/DiskNet/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title></title>
+  <title>DiskNet | </title>
   
 
 
@@ -177,9 +184,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -195,10 +203,9 @@
       <meta itemprop="name" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/11/12/DiskNet/" class="post-title-link" itemprop="url">DiskNet</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          DiskNet
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -225,6 +232,13 @@
             </span>
 
           
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
 
         </div>
       </header>
@@ -235,7 +249,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="通过识别双曲空间中的骨架预测复杂网络的长期动态性"><a href="#通过识别双曲空间中的骨架预测复杂网络的长期动态性" class="headerlink" title="通过识别双曲空间中的骨架预测复杂网络的长期动态性"></a>通过识别双曲空间中的骨架预测复杂网络的长期动态性</h1><p>学习复杂的网络动力学是理解、模拟和控制现实世界复杂系统的基础。尽管人们在预测网络节点的未来状态方面做出了巨大努力，但捕捉长期动态的能力在很大程度上仍然有限。这是因为他们忽略了一个事实，即复杂网络的长期动态主要受其固有的低维流形（即骨架）支配。因此，我们提出了动态不变骨架神经网络（DiskNet），它基于双曲空间的重整化群结构来识别复杂网络的骨架，从而同时保留拓扑和动力学特性。具体来说，我们首先通过物理信息双曲嵌入将具有各种动力学特性的复杂网络浓缩为简单骨架。然后，我们设计图神经常微分方程来捕捉骨架上的浓缩动力学。最后，我们使用基于度的超分辨率模块将骨架网络和动力学恢复为原始网络和动力学。通过对三个代表性动态以及五个真实世界和两个合成网络的广泛实验，证明了所提出的 DiskNet 的卓越性能，就长期预测准确率而言，它比最先进的基线平均高出 10.18%。转载代码请访问：<a target="_blank" rel="noopener" href="https://github.com/tsinghua-fib-lab/DiskNet">https://github.com/tsinghua-fib-lab/DiskNet</a></p>
+        <h1 id="通过识别双曲空间中的骨架预测复杂网络的长期动态性"><a href="#通过识别双曲空间中的骨架预测复杂网络的长期动态性" class="headerlink" title="通过识别双曲空间中的骨架预测复杂网络的长期动态性"></a>通过识别双曲空间中的骨架预测复杂网络的长期动态性</h1><p>学习复杂的网络动力学是理解、模拟和控制现实世界复杂系统的基础。尽管人们在预测网络节点的未来状态方面做出了巨大努力，但捕捉长期动态的能力在很大程度上仍然有限。这是因为他们忽略了一个事实，即复杂网络的长期动态主要受其固有的低维流形（即骨架）支配。因此，我们提出了动态不变骨架神经网络（DiskNet），它基于双曲空间的重整化群结构来识别复杂网络的骨架，从而同时保留拓扑和动力学特性。具体来说，我们首先通过物理信息双曲嵌入将具有各种动力学特性的复杂网络浓缩为简单骨架。然后，我们设计图神经常微分方程来捕捉骨架上的浓缩动力学。最后，我们使用基于度的超分辨率模块将骨架网络和动力学恢复为原始网络和动力学。通过对三个代表性动态以及五个真实世界和两个合成网络的广泛实验，证明了所提出的 DiskNet 的卓越性能，就长期预测准确率而言，它比最先进的基线平均高出 10.18%。转载代码请访问：<a target="_blank" rel="noopener" href="https://github.com/tsinghua-fib-lab/DiskNet">https://github.com/tsinghua-fib-lab/DiskNet</a></p>
 <h2 id="1-INTRODUCTION"><a href="#1-INTRODUCTION" class="headerlink" title="1 INTRODUCTION"></a>1 INTRODUCTION</h2><p>现实世界中许多复杂系统的演化行为，如大脑[9]、社会网络[51]和生态系统[15]，都可以建模为复杂网络的动力学[4]，其中系统内的组件被视为网络中的节点，组件之间的耦合相互作用被视为边[13]。学习这些复杂网络的动力学有助于提高分析这些网络的能力，从而促进众多重要应用，包括了解其内在弹性[13]、预测其未来状态[31, 35]和控制其状态[28]等。然而，复杂网络中通常存在大量节点和边。一方面，大规模网络大大增加了复杂网络推理和估计任务的计算复杂度。另一方面，大量不太重要的节点作为干扰变量，有可能阻碍我们揭示网络的有效动态[13]。在这种情况下，一个基本问题出现了：给定一个任意的复杂网络，我们能否找到一个低维骨架，在此骨架上对粗尺度的长期动态进行建模，从而获得较高的预测性能和较低的计算成本？</p>
 <p>作为一个长期存在的问题，人们开发了许多方法来降低大规模网络的维度，包括统计物理方法[41]和机器学习方法[20, 22]。其中，统计物理方法利用重正化群技术[14, 40]来识别保留度分布和聚类系数的骨架。机器学习方法 [20, 22] 学习图粗化策略，以保持原始网络与使用粗化网络重建的网络之间的拓扑和节点特征一致性。所有这些方法都只保留了静态拓扑和节点信息，忽略了网络的动态变化 [14、20、22、40]。因此，它们无法捕捉节点动态的集体行为，无法准确预测其长期演变。此外，有几种分析方法表明，复杂网络动态的关键属性，如弹性 [13] 或临界时间延迟 [29]，可以嵌入到一个超低维度的子曲面中 [13, 29]。然而，这些方法依赖于过于简化的网络拓扑假设，如均质节点度或基于度的均场[29, 39]，无法得到理想维度的骨架。综上所述，复杂的网络及其错综复杂的动态能否浓缩成低维骨架仍是一个悬而未决的问题。</p>
 <p>然而，开发一种有效的方法来学习骨架和骨架网络上的相应动力学也是一项艰巨的任务，其中存在以下挑战。首先，确定有利于最准确预测复杂网络演化行为的骨架具有挑战性。骨架可以通过将节点集群粗分为超级节点来获得。然而，我们对如何在保留骨架网络内在动态的同时找到这样的簇缺乏足够的了解。其次，如何在骨架网络中的节点状态与原始网络之间建立可逆映射是第二个挑战。这涉及建立一个聚合函数，根据子节点计算超级节点的状态，以及一个提升函数，将每个超级节点的状态映射回子节点。由于聚合过程不可避免地会带来信息损失，因此如何建立一个高效的提升函数是一个关键问题</p>
@@ -251,91 +265,33 @@
 <p>我们的目标是确定赋值矩阵 P、状态聚合函数 u 和提升函数 v，从而建立图 G 的低维骨架 Gs。随后，通过在骨架上建立动态模型 dxs,i dt 并将其映射回子节点，我们的目标是在给定历史观测值 Xlookback 的情况下，实现对节点状态长期演化 Xhorizon 的准确预测。整个过程如图 1 所示</p>
 <h2 id="3-METHOD"><a href="#3-METHOD" class="headerlink" title="3 METHOD"></a>3 METHOD</h2><p>在本节中，我们将提出动态不变骨架神经网络（DiskNet），通过识别双曲空间中的骨架来预测复杂网络的长期动态。整体框架如图 2 所示。根据上述挑战，我们首先提出了双曲重正化群（RG）模块，利用双曲几何的强大表示能力捕捉节点的拓扑和动态相似性，并自适应计算赋值矩阵，指导节点赋值和动态聚合。然后，设计了一个神经 ODE 模型来模拟骨架上超级节点的神经动力学，其中包含两种机制：自我动力学和邻居相互作用。最后，提出了一个基于度聚类的超分辨率模块，将骨架上的动态表示提升到原始节点上。</p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/PaperReading/" rel="tag"># PaperReading</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/10/08/hello-world/">
+        
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avator.JPG">
-      <meta itemprop="name" content="Blue">
-      <meta itemprop="description" content="">
-    </span>
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/10/08/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-10-08 17:07:17" itemprop="dateCreated datePublished" datetime="2024-10-08T17:07:17+08:00">2024-10-08</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/08/hello-world/" rel="prev" title="Hello World">
+      <i class="fa fa-chevron-left"></i> Hello World
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -388,6 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%AF%86%E5%88%AB%E5%8F%8C%E6%9B%B2%E7%A9%BA%E9%97%B4%E4%B8%AD%E7%9A%84%E9%AA%A8%E6%9E%B6%E9%A2%84%E6%B5%8B%E5%A4%8D%E6%9D%82%E7%BD%91%E7%BB%9C%E7%9A%84%E9%95%BF%E6%9C%9F%E5%8A%A8%E6%80%81%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">通过识别双曲空间中的骨架预测复杂网络的长期动态性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-INTRODUCTION"><span class="nav-number">1.1.</span> <span class="nav-text">1 INTRODUCTION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#contribution"><span class="nav-number">1.1.1.</span> <span class="nav-text">contribution</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-PROBLEM-FORMULATION"><span class="nav-number">1.2.</span> <span class="nav-text">2 PROBLEM FORMULATION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-METHOD"><span class="nav-number">1.3.</span> <span class="nav-text">3 METHOD</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
