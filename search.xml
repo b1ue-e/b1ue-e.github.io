@@ -127,7 +127,7 @@
   <entry>
     <title>多目标遗传算法NSGA-II实现</title>
     <url>/2024/11/19/NSGA-II/</url>
-    <content><![CDATA[<h1 id="NSGA-II"><a href="#NSGA-II" class="headerlink" title="NSGA-II"></a>NSGA-II</h1><h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>非支配排序遗传算法（NSGA-II）是一种多目标优化算法，它通过在遗传算法的基础上引入非支配排序和拥挤度计算，以平衡多目标优化问题中的多个目标。NSGA-II是遗传算法的一种改进版本，它在遗传算法的基础上引入了<strong>非支配排序和拥挤度</strong>计算，以平衡多目标优化问题中的多个目标。本文将简要介绍NSGA-II的关键点和实现。</p>
+    <content><![CDATA[<h1 id="NSGA-II"><a href="#NSGA-II" class="headerlink" title="NSGA-II"></a>NSGA-II</h1><h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>非支配排序遗传算法（NSGA-II）是一种多目标优化算法，它通过在遗传算法的基础上引入非支配排序和拥挤度计算，以平衡多目标优化问题中的多个目标。NSGA-II是遗传算法的一种改进版本，它在遗传算法的基础上引入了<strong>非支配排序和拥挤度</strong>计算，以平衡多目标优化问题中的多个目标。本文将简要介绍NSGA-II的关键点和实现。<br><span id="more"></span></p>
 <h2 id="非支配排序"><a href="#非支配排序" class="headerlink" title="非支配排序"></a>非支配排序</h2><h3 id="支配和非支配关系"><a href="#支配和非支配关系" class="headerlink" title="支配和非支配关系"></a>支配和非支配关系</h3><p>设p和q是两个解，称p支配q，当且仅当，1. 对于所有的子目标，p的目标值都不劣于q的目标值；2. 至少有一个子目标，p的目标值优于q的目标值。</p>
 <h3 id="非支配排序-1"><a href="#非支配排序-1" class="headerlink" title="非支配排序"></a>非支配排序</h3><p><em>Non-dominated Sorting</em> 是一种用于多目标优化的排序算法，它将解按照支配关系划分为多个非支配集合。</p>
 <ol>
