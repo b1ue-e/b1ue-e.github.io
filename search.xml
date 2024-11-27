@@ -147,15 +147,27 @@
       </tags>
   </entry>
   <entry>
-    <title>704. Binary Search</title>
-    <url>/2024/11/26/leetcode704/</url>
-    <content><![CDATA[<h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。<br><a href="https://leetcode.cn/problems/binary-search/">题目链接</a><br><span id="more"></span></p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>二分查找的适用场景考虑，主要是需要数组有序，且数组内没有重复元素。二分法的主要错误在于循环时不变量的寻找，在二分法中，区间的定义就是循环的不变量。<br>考虑区间是左闭右开还是左闭右闭。<br><strong>示例1:</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: nums = [-1,0,3,5,9,12], target = 9     </span><br><span class="line">输出: 4       </span><br><span class="line">解释: 9 出现在 nums 中并且下标为 4    </span><br></pre></td></tr></table></figure><br><strong>示例2</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: nums = [-1,0,3,5,9,12], target = 2</span><br><span class="line">输出: -1</span><br><span class="line">解释: 2 不存在 nums 中因此返回 -1</span><br></pre></td></tr></table></figure></p>
-<h2 id="第一种写法"><a href="#第一种写法" class="headerlink" title="第一种写法"></a>第一种写法</h2><p>在左闭右闭的区间上进行查找，循环不变量为[left, right]</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> right = nums.<span class="built_in">size</span>() - <span class="number">1</span>; <span class="comment">// 定义target在左闭右闭的区间里，[left, right]</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123; <span class="comment">// 当left==right，区间[left, right]依然有效，所以用 &lt;=</span></span><br><span class="line">            <span class="type">int</span> middle = left + ((right - left) / <span class="number">2</span>);<span class="comment">// 防止溢出 等同于(left + right)/2</span></span><br><span class="line">            <span class="keyword">if</span> (nums[middle] &gt; target) &#123;</span><br><span class="line">                right = middle - <span class="number">1</span>; <span class="comment">// target 在左区间，所以[left, middle - 1]</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[middle] &lt; target) &#123;</span><br><span class="line">                left = middle + <span class="number">1</span>; <span class="comment">// target 在右区间，所以[middle + 1, right]</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">// nums[middle] == target</span></span><br><span class="line">                <span class="keyword">return</span> middle; <span class="comment">// 数组中找到目标值，直接返回下标</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 未找到目标值</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>时间复杂度：O(log n)<br>空间复杂度：O(1)</p>
-<h2 id="第二种写法"><a href="#第二种写法" class="headerlink" title="第二种写法"></a>第二种写法</h2><p>在左闭右开的区间上进行查找，循环不变量为[left, right)<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> right = nums.<span class="built_in">size</span>(); <span class="comment">// 定义target在左闭右开的区间里，即：[left, right)</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123; <span class="comment">// 因为left == right的时候，在[left, right)是无效的空间，所以使用 &lt;</span></span><br><span class="line">            <span class="type">int</span> middle = left + ((right - left) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[middle] &gt; target) &#123;</span><br><span class="line">                right = middle; <span class="comment">// target 在左区间，在[left, middle)中</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[middle] &lt; target) &#123;</span><br><span class="line">                left = middle + <span class="number">1</span>; <span class="comment">// target 在右区间，在[middle + 1, right)中</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">// nums[middle] == target</span></span><br><span class="line">                <span class="keyword">return</span> middle; <span class="comment">// 数组中找到目标值，直接返回下标</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 未找到目标值</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h2><p><a href="https://programmercarl.com/">代码随想录</a></p>
+    <title>26. remove-duplicates-from-sorted-array</title>
+    <url>/2024/11/27/leetcode26/</url>
+    <content><![CDATA[<h1 id="删除有序数组中的重复项"><a href="#删除有序数组中的重复项" class="headerlink" title="删除有序数组中的重复项"></a>删除有序数组中的重复项</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。</p>
+<p>考虑 nums 的唯一元素的数量为 k ，你需要做以下事情确保你的题解可以被通过：</p>
+<ul>
+<li>更改数组 nums ，使 nums 的前 k 个元素包含唯一元素，并按照它们最初在 nums 中出现的顺序排列。nums 的其余元素与 nums 的大小不重要。</li>
+<li>返回 k 。</li>
+</ul>
+<p>示例 1：</p>
+<ul>
+<li>输入：nums = [1,1,2]</li>
+<li>输出：2, nums = [1,2,_]</li>
+<li>解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新长度后面的元素。</li>
+</ul>
+<p>示例 2：</p>
+<ul>
+<li>输入：nums = [0,0,1,1,1,2,2,3,3,4]</li>
+<li>输出：5, nums = [0,1,2,3,4]</li>
+<li>解释：函数应该返回新的长度 5 ， 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4 。不需要考虑数组中超出新长度后面的元素。</li>
+</ul>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，慢指针指向新数组的下标，快指针进行判断，由于数组非严格递增，那么重复元素的下标一定是连续的。 如果发现不重复的元素就添加到新数组下标位置。此题注意边界情况<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeDuplicates</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        slow = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[fast] != nums[fast-<span class="number">1</span>]:</span><br><span class="line">                nums[slow] = nums[fast]</span><br><span class="line">                slow += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> slow</span><br><span class="line">        </span><br></pre></td></tr></table></figure></p>
 <!-- flag of hidden posts -->]]></content>
       <categories>
         <category>leetcode</category>
@@ -218,6 +230,28 @@
       </categories>
   </entry>
   <entry>
+    <title>283. move-zeroes</title>
+    <url>/2024/11/27/leetcode283/</url>
+    <content><![CDATA[<h1 id="移动零"><a href="#移动零" class="headerlink" title="移动零"></a>移动零</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
+<p>请注意 ，必须在不复制数组的情况下原地对数组进行操作。</p>
+<p><a href="https://leetcode.cn/problems/move-zeroes/">题目链接</a></p>
+<p>示例 1:</p>
+<ul>
+<li>输入: nums = [0,1,0,3,12]</li>
+<li>输出: [1,3,12,0,0]</li>
+</ul>
+<p>示例 2:</p>
+<ul>
+<li>输入: nums = [0]</li>
+<li>输出: [0]</li>
+</ul>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，快指针获取不是0的值赋给慢指针指向的数组下标<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">moveZeroes</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify nums in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        slow = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> fast != <span class="number">0</span>:</span><br><span class="line">                nums[slow] = fast</span><br><span class="line">                slow +=<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> slow &lt; <span class="built_in">len</span>(nums):</span><br><span class="line">            nums[slow] = <span class="number">0</span></span><br><span class="line">            slow +=<span class="number">1</span></span><br><span class="line">        </span><br></pre></td></tr></table></figure></p>
+<!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+  </entry>
+  <entry>
     <title>35. search-insert-position</title>
     <url>/2024/11/27/leetcode35/</url>
     <content><![CDATA[<h1 id="搜索插入位置"><a href="#搜索插入位置" class="headerlink" title="搜索插入位置"></a>搜索插入位置</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。</p>
@@ -253,6 +287,47 @@
       </categories>
   </entry>
   <entry>
+    <title>367. valid-perfect-square</title>
+    <url>/2024/11/27/leetcode367/</url>
+    <content><![CDATA[<h1 id="有效的完全平方数"><a href="#有效的完全平方数" class="headerlink" title="有效的完全平方数"></a>有效的完全平方数</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个正整数 num 。如果 num 是一个完全平方数，则返回 true ，否则返回 false 。</p>
+<p>完全平方数 是一个可以写成某个整数的平方的整数。换句话说，它可以写成某个整数和自身的乘积。</p>
+<p>不能使用任何内置的库函数，如  sqrt 。</p>
+<p><a href="https://leetcode.cn/problems/valid-perfect-square/">题目链接</a></p>
+<p>示例 1：</p>
+<ul>
+<li>输入：num = 16</li>
+<li>输出：true</li>
+<li>解释：返回 true ，因为 4 * 4 = 16 且 4 是一个整数。</li>
+</ul>
+<p>示例 2：</p>
+<ul>
+<li>输入：num = 14</li>
+<li>输出：false</li>
+<li>解释：返回 false ，因为 3.742 * 3.742 = 14 但 3.742 不是一个整数。</li>
+</ul>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>简单的二分查找</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isPerfectSquare</span><span class="params">(<span class="type">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> l = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> r = num;</span><br><span class="line">        <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">            <span class="type">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>((<span class="type">long</span>)mid * mid &gt; num)&#123;</span><br><span class="line">                r = mid <span class="number">-1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="type">long</span>)mid * mid &lt;num)&#123;</span><br><span class="line">                l = mid <span class="number">+1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>704. Binary Search</title>
+    <url>/2024/11/26/leetcode704/</url>
+    <content><![CDATA[<h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个 n 个元素有序的（升序）整型数组 nums 和一个目标值 target  ，写一个函数搜索 nums 中的 target，如果目标值存在返回下标，否则返回 -1。<br><a href="https://leetcode.cn/problems/binary-search/">题目链接</a><br><span id="more"></span></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>二分查找的适用场景考虑，主要是需要数组有序，且数组内没有重复元素。二分法的主要错误在于循环时不变量的寻找，在二分法中，区间的定义就是循环的不变量。<br>考虑区间是左闭右开还是左闭右闭。<br><strong>示例1:</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: nums = [-1,0,3,5,9,12], target = 9     </span><br><span class="line">输出: 4       </span><br><span class="line">解释: 9 出现在 nums 中并且下标为 4    </span><br></pre></td></tr></table></figure><br><strong>示例2</strong><br><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">输入: nums = [-1,0,3,5,9,12], target = 2</span><br><span class="line">输出: -1</span><br><span class="line">解释: 2 不存在 nums 中因此返回 -1</span><br></pre></td></tr></table></figure></p>
+<h2 id="第一种写法"><a href="#第一种写法" class="headerlink" title="第一种写法"></a>第一种写法</h2><p>在左闭右闭的区间上进行查找，循环不变量为[left, right]</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> right = nums.<span class="built_in">size</span>() - <span class="number">1</span>; <span class="comment">// 定义target在左闭右闭的区间里，[left, right]</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt;= right) &#123; <span class="comment">// 当left==right，区间[left, right]依然有效，所以用 &lt;=</span></span><br><span class="line">            <span class="type">int</span> middle = left + ((right - left) / <span class="number">2</span>);<span class="comment">// 防止溢出 等同于(left + right)/2</span></span><br><span class="line">            <span class="keyword">if</span> (nums[middle] &gt; target) &#123;</span><br><span class="line">                right = middle - <span class="number">1</span>; <span class="comment">// target 在左区间，所以[left, middle - 1]</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[middle] &lt; target) &#123;</span><br><span class="line">                left = middle + <span class="number">1</span>; <span class="comment">// target 在右区间，所以[middle + 1, right]</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">// nums[middle] == target</span></span><br><span class="line">                <span class="keyword">return</span> middle; <span class="comment">// 数组中找到目标值，直接返回下标</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 未找到目标值</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>时间复杂度：O(log n)<br>空间复杂度：O(1)</p>
+<h2 id="第二种写法"><a href="#第二种写法" class="headerlink" title="第二种写法"></a>第二种写法</h2><p>在左闭右开的区间上进行查找，循环不变量为[left, right)<br><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">search</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums, <span class="type">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> left = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> right = nums.<span class="built_in">size</span>(); <span class="comment">// 定义target在左闭右开的区间里，即：[left, right)</span></span><br><span class="line">        <span class="keyword">while</span> (left &lt; right) &#123; <span class="comment">// 因为left == right的时候，在[left, right)是无效的空间，所以使用 &lt;</span></span><br><span class="line">            <span class="type">int</span> middle = left + ((right - left) &gt;&gt; <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (nums[middle] &gt; target) &#123;</span><br><span class="line">                right = middle; <span class="comment">// target 在左区间，在[left, middle)中</span></span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (nums[middle] &lt; target) &#123;</span><br><span class="line">                left = middle + <span class="number">1</span>; <span class="comment">// target 在右区间，在[middle + 1, right)中</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123; <span class="comment">// nums[middle] == target</span></span><br><span class="line">                <span class="keyword">return</span> middle; <span class="comment">// 数组中找到目标值，直接返回下标</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 未找到目标值</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h2><p><a href="https://programmercarl.com/">代码随想录</a></p>
+<!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+  </entry>
+  <entry>
     <title>977. squares-of-a-sorted-array</title>
     <url>/2024/11/27/leetcode977/</url>
     <content><![CDATA[<h1 id="有序数组的平方"><a href="#有序数组的平方" class="headerlink" title="有序数组的平方"></a>有序数组的平方</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个按 非递减顺序 排序的整数数组 nums，返回 每个数字的平方 组成的新数组，要求也按 非递减顺序 排序。</p>
@@ -281,31 +356,23 @@
       </categories>
   </entry>
   <entry>
-    <title>26. remove-duplicates-from-sorted-array</title>
-    <url>/2024/11/27/leetcode26/</url>
-    <content><![CDATA[<h1 id="删除有序数组中的重复项"><a href="#删除有序数组中的重复项" class="headerlink" title="删除有序数组中的重复项"></a>删除有序数组中的重复项</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。</p>
-<p>考虑 nums 的唯一元素的数量为 k ，你需要做以下事情确保你的题解可以被通过：</p>
-<ul>
-<li>更改数组 nums ，使 nums 的前 k 个元素包含唯一元素，并按照它们最初在 nums 中出现的顺序排列。nums 的其余元素与 nums 的大小不重要。</li>
-<li>返回 k 。</li>
-</ul>
-<p>示例 1：</p>
-<ul>
-<li>输入：nums = [1,1,2]</li>
-<li>输出：2, nums = [1,2,_]</li>
-<li>解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新长度后面的元素。</li>
-</ul>
-<p>示例 2：</p>
-<ul>
-<li>输入：nums = [0,0,1,1,1,2,2,3,3,4]</li>
-<li>输出：5, nums = [0,1,2,3,4]</li>
-<li>解释：函数应该返回新的长度 5 ， 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4 。不需要考虑数组中超出新长度后面的元素。</li>
-</ul>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，慢指针指向新数组的下标，快指针进行判断，由于数组非严格递增，那么重复元素的下标一定是连续的。 如果发现不重复的元素就添加到新数组下标位置。此题注意边界情况<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeDuplicates</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        slow = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[fast] != nums[fast-<span class="number">1</span>]:</span><br><span class="line">                nums[slow] = nums[fast]</span><br><span class="line">                slow += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> slow</span><br><span class="line">        </span><br></pre></td></tr></table></figure></p>
-<!-- flag of hidden posts -->]]></content>
+    <title>Polygenic enrichment distinguishes disease associations of individual cells in single-cell RNA-seq data</title>
+    <url>/2024/11/15/scDRS/</url>
+    <content><![CDATA[<h1 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h1><p>通过单细胞 RNA 测序（scRNA-seq）量化的单细胞级分辨率的基因表达，可以为疾病和复杂性状的病理和细胞起源提供独特的见解。在这里，我们介绍了单细胞疾病相关性评分（scDRS），这是一种在单细胞分辨率上将 scRNA-seq 与多基因疾病风险联系起来的方法；scDRS 可识别在由 GWAS 数据构建的疾病特异性基因集中基因表达水平过高的单个细胞。我们通过模拟确定，scDRS 在识别与疾病相关的单个细胞方面具有良好的校准性和强大的功能。我们将 scDRS 与 16 个 scRNA-seq 数据集（涵盖 31 个组织和器官的 130 万个细胞）结合起来，应用于 74 种疾病和复杂性状的 GWAS 数据（平均 N =341K）。在细胞类型层面，scDRS 广泛再现了经典细胞类型与疾病之间的已知联系，并产生了新的生物学上合理的发现。在单个细胞层面，scDRS 发现了现有细胞类型标签无法捕捉的疾病相关细胞亚群，包括与炎症性肠病相关的 CD4+ T 细胞亚群，其部分特征为效应样状态；与精神分裂症相关的海马 CA1 锥体神经元亚群，部分特征是它们的空间位置位于海马 CA1 区的近端；以及与甘油三酯水平相关的肝细胞亚群，部分特征是它们的倍性水平较高。在基因水平上，我们发现在单个细胞中表达与 scDRS 评分相关的基因（从而反映了与 GWAS 疾病基因的共同表达）强烈富集了黄金标准药物靶基因和孟德尔疾病基因。<br><span id="more"></span></p>
+<img src="/2024/11/15/scDRS/method.png" class="" title="method">
+<h1 id="METHOD"><a href="#METHOD" class="headerlink" title="METHOD"></a>METHOD</h1><p>scDRS 将 scRNA-seq 中的基因表达谱与 GWAS 中的多基因疾病信息整合在一起，通过评估特定细胞中 GWAS 推定疾病基因相对于所有细胞中具有相似表达的其他基因的过量表达，将单个细胞与疾病联系起来。</p>
+<p><strong>首先</strong>，scDRS 利用现有的基因评分方法 MAGMA（前 1000 个 MAGMA 基因），从 GWAS 的汇总统计数据中构建一组推定疾病基因。</p>
+<p><strong>其次</strong>，scDRS 对每个细胞中假定疾病基因的总表达量进行量化，以生成细胞特异性原始疾病评分；为了最大限度地提高权重，每个假定疾病基因都按其 GWAS MAGMA z-score 加权，并按其在单细胞数据中的基因特异性技术噪声水平反向加权，该噪声水平是通过对各基因的均值-方差关系建模估算得出的。为了确定统计显著性，scDRS 还根据匹配对照基因集的蒙特卡洛（Monte Carlo，MC）样本（与推定疾病基因的基因集大小、平均表达量和表达方差相匹配）生成 1000 组细胞特异性原始对照分数。</p>
+<p><strong>第三</strong>，scDRS 对每个细胞的原始疾病得分和原始对照得分进行归一化处理（得出归一化疾病得分和归一化对照得分），然后根据所有对照基因组和所有细胞的集合归一化对照得分的经验分布计算细胞级 p 值。</p>
+]]></content>
       <categories>
-        <category>leetcode</category>
+        <category>single-cell</category>
+        <category>GWAS</category>
       </categories>
+      <tags>
+        <tag>single-cell</tag>
+        <tag>disease relevance score</tag>
+      </tags>
   </entry>
   <entry>
     <title>904. fruit-into-baskets</title>
@@ -345,72 +412,5 @@
       <categories>
         <category>leetcode</category>
       </categories>
-  </entry>
-  <entry>
-    <title>283. move-zeroes</title>
-    <url>/2024/11/27/leetcode283/</url>
-    <content><![CDATA[<h1 id="移动零"><a href="#移动零" class="headerlink" title="移动零"></a>移动零</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p>
-<p>请注意 ，必须在不复制数组的情况下原地对数组进行操作。</p>
-<p><a href="https://leetcode.cn/problems/move-zeroes/">题目链接</a></p>
-<p>示例 1:</p>
-<ul>
-<li>输入: nums = [0,1,0,3,12]</li>
-<li>输出: [1,3,12,0,0]</li>
-</ul>
-<p>示例 2:</p>
-<ul>
-<li>输入: nums = [0]</li>
-<li>输出: [0]</li>
-</ul>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，快指针获取不是0的值赋给慢指针指向的数组下标<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">moveZeroes</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify nums in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        slow = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> fast != <span class="number">0</span>:</span><br><span class="line">                nums[slow] = fast</span><br><span class="line">                slow +=<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> slow &lt; <span class="built_in">len</span>(nums):</span><br><span class="line">            nums[slow] = <span class="number">0</span></span><br><span class="line">            slow +=<span class="number">1</span></span><br><span class="line">        </span><br></pre></td></tr></table></figure></p>
-<!-- flag of hidden posts -->]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>367. valid-perfect-square</title>
-    <url>/2024/11/27/leetcode367/</url>
-    <content><![CDATA[<h1 id="有效的完全平方数"><a href="#有效的完全平方数" class="headerlink" title="有效的完全平方数"></a>有效的完全平方数</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个正整数 num 。如果 num 是一个完全平方数，则返回 true ，否则返回 false 。</p>
-<p>完全平方数 是一个可以写成某个整数的平方的整数。换句话说，它可以写成某个整数和自身的乘积。</p>
-<p>不能使用任何内置的库函数，如  sqrt 。</p>
-<p><a href="https://leetcode.cn/problems/valid-perfect-square/">题目链接</a></p>
-<p>示例 1：</p>
-<ul>
-<li>输入：num = 16</li>
-<li>输出：true</li>
-<li>解释：返回 true ，因为 4 * 4 = 16 且 4 是一个整数。</li>
-</ul>
-<p>示例 2：</p>
-<ul>
-<li>输入：num = 14</li>
-<li>输出：false</li>
-<li>解释：返回 false ，因为 3.742 * 3.742 = 14 但 3.742 不是一个整数。</li>
-</ul>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>简单的二分查找</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isPerfectSquare</span><span class="params">(<span class="type">int</span> num)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> l = <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> r = num;</span><br><span class="line">        <span class="keyword">while</span>(l&lt;=r)&#123;</span><br><span class="line">            <span class="type">int</span> mid = l + (r-l)/<span class="number">2</span>;</span><br><span class="line">            <span class="keyword">if</span>((<span class="type">long</span>)mid * mid &gt; num)&#123;</span><br><span class="line">                r = mid <span class="number">-1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>((<span class="type">long</span>)mid * mid &lt;num)&#123;</span><br><span class="line">                l = mid <span class="number">+1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<!-- flag of hidden posts -->]]></content>
-      <categories>
-        <category>leetcode</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Polygenic enrichment distinguishes disease associations of individual cells in single-cell RNA-seq data</title>
-    <url>/2024/11/15/scDRS/</url>
-    <content><![CDATA[<h1 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h1><p>通过单细胞 RNA 测序（scRNA-seq）量化的单细胞级分辨率的基因表达，可以为疾病和复杂性状的病理和细胞起源提供独特的见解。在这里，我们介绍了单细胞疾病相关性评分（scDRS），这是一种在单细胞分辨率上将 scRNA-seq 与多基因疾病风险联系起来的方法；scDRS 可识别在由 GWAS 数据构建的疾病特异性基因集中基因表达水平过高的单个细胞。我们通过模拟确定，scDRS 在识别与疾病相关的单个细胞方面具有良好的校准性和强大的功能。我们将 scDRS 与 16 个 scRNA-seq 数据集（涵盖 31 个组织和器官的 130 万个细胞）结合起来，应用于 74 种疾病和复杂性状的 GWAS 数据（平均 N =341K）。在细胞类型层面，scDRS 广泛再现了经典细胞类型与疾病之间的已知联系，并产生了新的生物学上合理的发现。在单个细胞层面，scDRS 发现了现有细胞类型标签无法捕捉的疾病相关细胞亚群，包括与炎症性肠病相关的 CD4+ T 细胞亚群，其部分特征为效应样状态；与精神分裂症相关的海马 CA1 锥体神经元亚群，部分特征是它们的空间位置位于海马 CA1 区的近端；以及与甘油三酯水平相关的肝细胞亚群，部分特征是它们的倍性水平较高。在基因水平上，我们发现在单个细胞中表达与 scDRS 评分相关的基因（从而反映了与 GWAS 疾病基因的共同表达）强烈富集了黄金标准药物靶基因和孟德尔疾病基因。<br><span id="more"></span></p>
-
-<h1 id="METHOD"><a href="#METHOD" class="headerlink" title="METHOD"></a>METHOD</h1><p>scDRS 将 scRNA-seq 中的基因表达谱与 GWAS 中的多基因疾病信息整合在一起，通过评估特定细胞中 GWAS 推定疾病基因相对于所有细胞中具有相似表达的其他基因的过量表达，将单个细胞与疾病联系起来。</p>
-<p><strong>首先</strong>，scDRS 利用现有的基因评分方法 MAGMA（前 1000 个 MAGMA 基因），从 GWAS 的汇总统计数据中构建一组推定疾病基因。</p>
-<p><strong>其次</strong>，scDRS 对每个细胞中假定疾病基因的总表达量进行量化，以生成细胞特异性原始疾病评分；为了最大限度地提高权重，每个假定疾病基因都按其 GWAS MAGMA z-score 加权，并按其在单细胞数据中的基因特异性技术噪声水平反向加权，该噪声水平是通过对各基因的均值-方差关系建模估算得出的。为了确定统计显著性，scDRS 还根据匹配对照基因集的蒙特卡洛（Monte Carlo，MC）样本（与推定疾病基因的基因集大小、平均表达量和表达方差相匹配）生成 1000 组细胞特异性原始对照分数。</p>
-<p><strong>第三</strong>，scDRS 对每个细胞的原始疾病得分和原始对照得分进行归一化处理（得出归一化疾病得分和归一化对照得分），然后根据所有对照基因组和所有细胞的集合归一化对照得分的经验分布计算细胞级 p 值。</p>
-]]></content>
-      <categories>
-        <category>single-cell</category>
-        <category>GWAS</category>
-      </categories>
-      <tags>
-        <tag>single-cell</tag>
-        <tag>disease relevance score</tag>
-      </tags>
   </entry>
 </search>
