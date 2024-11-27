@@ -106,25 +106,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Polygenic enrichment distinguishes disease associations of individual cells in single-cell RNA-seq data</title>
-    <url>/2024/11/15/scDRS/</url>
-    <content><![CDATA[<h1 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h1><p>通过单细胞 RNA 测序（scRNA-seq）量化的单细胞级分辨率的基因表达，可以为疾病和复杂性状的病理和细胞起源提供独特的见解。在这里，我们介绍了单细胞疾病相关性评分（scDRS），这是一种在单细胞分辨率上将 scRNA-seq 与多基因疾病风险联系起来的方法；scDRS 可识别在由 GWAS 数据构建的疾病特异性基因集中基因表达水平过高的单个细胞。我们通过模拟确定，scDRS 在识别与疾病相关的单个细胞方面具有良好的校准性和强大的功能。我们将 scDRS 与 16 个 scRNA-seq 数据集（涵盖 31 个组织和器官的 130 万个细胞）结合起来，应用于 74 种疾病和复杂性状的 GWAS 数据（平均 N =341K）。在细胞类型层面，scDRS 广泛再现了经典细胞类型与疾病之间的已知联系，并产生了新的生物学上合理的发现。在单个细胞层面，scDRS 发现了现有细胞类型标签无法捕捉的疾病相关细胞亚群，包括与炎症性肠病相关的 CD4+ T 细胞亚群，其部分特征为效应样状态；与精神分裂症相关的海马 CA1 锥体神经元亚群，部分特征是它们的空间位置位于海马 CA1 区的近端；以及与甘油三酯水平相关的肝细胞亚群，部分特征是它们的倍性水平较高。在基因水平上，我们发现在单个细胞中表达与 scDRS 评分相关的基因（从而反映了与 GWAS 疾病基因的共同表达）强烈富集了黄金标准药物靶基因和孟德尔疾病基因。<br><span id="more"></span></p>
-<img src="/2024/11/15/scDRS/method.png" class="" title="method">
-<h1 id="METHOD"><a href="#METHOD" class="headerlink" title="METHOD"></a>METHOD</h1><p>scDRS 将 scRNA-seq 中的基因表达谱与 GWAS 中的多基因疾病信息整合在一起，通过评估特定细胞中 GWAS 推定疾病基因相对于所有细胞中具有相似表达的其他基因的过量表达，将单个细胞与疾病联系起来。</p>
-<p><strong>首先</strong>，scDRS 利用现有的基因评分方法 MAGMA（前 1000 个 MAGMA 基因），从 GWAS 的汇总统计数据中构建一组推定疾病基因。</p>
-<p><strong>其次</strong>，scDRS 对每个细胞中假定疾病基因的总表达量进行量化，以生成细胞特异性原始疾病评分；为了最大限度地提高权重，每个假定疾病基因都按其 GWAS MAGMA z-score 加权，并按其在单细胞数据中的基因特异性技术噪声水平反向加权，该噪声水平是通过对各基因的均值-方差关系建模估算得出的。为了确定统计显著性，scDRS 还根据匹配对照基因集的蒙特卡洛（Monte Carlo，MC）样本（与推定疾病基因的基因集大小、平均表达量和表达方差相匹配）生成 1000 组细胞特异性原始对照分数。</p>
-<p><strong>第三</strong>，scDRS 对每个细胞的原始疾病得分和原始对照得分进行归一化处理（得出归一化疾病得分和归一化对照得分），然后根据所有对照基因组和所有细胞的集合归一化对照得分的经验分布计算细胞级 p 值。</p>
-]]></content>
-      <categories>
-        <category>single-cell</category>
-        <category>GWAS</category>
-      </categories>
-      <tags>
-        <tag>single-cell</tag>
-        <tag>disease relevance score</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>多目标遗传算法NSGA-II实现</title>
     <url>/2024/11/19/NSGA-II/</url>
     <content><![CDATA[<h1 id="NSGA-II"><a href="#NSGA-II" class="headerlink" title="NSGA-II"></a>NSGA-II</h1><h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>非支配排序遗传算法（NSGA-II）是一种多目标优化算法，它通过在遗传算法的基础上引入非支配排序和拥挤度计算，以平衡多目标优化问题中的多个目标。NSGA-II是遗传算法的一种改进版本，它在遗传算法的基础上引入了<strong>非支配排序和拥挤度</strong>计算，以平衡多目标优化问题中的多个目标。本文将简要介绍NSGA-II的关键点和实现。<br><span id="more"></span></p>
@@ -321,6 +302,45 @@
 <li>解释：函数应该返回新的长度 5 ， 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4 。不需要考虑数组中超出新长度后面的元素。</li>
 </ul>
 <h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，慢指针指向新数组的下标，快指针进行判断，由于数组非严格递增，那么重复元素的下标一定是连续的。 如果发现不重复的元素就添加到新数组下标位置。此题注意边界情况<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeDuplicates</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        slow = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[fast] != nums[fast-<span class="number">1</span>]:</span><br><span class="line">                nums[slow] = nums[fast]</span><br><span class="line">                slow += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> slow</span><br><span class="line">        </span><br></pre></td></tr></table></figure></p>
+<!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>904. fruit-into-baskets</title>
+    <url>/2024/11/27/leetcode904/</url>
+    <content><![CDATA[<h1 id="水果成篮"><a href="#水果成篮" class="headerlink" title="水果成篮"></a>水果成篮</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>你正在探访一家农场，农场从左到右种植了一排果树。这些树用一个整数数组 fruits 表示，其中 fruits[i] 是第 i 棵树上的水果 种类 。</p>
+<p>你想要尽可能多地收集水果。然而，农场的主人设定了一些严格的规矩，你必须按照要求采摘水果：</p>
+<ul>
+<li>你只有 两个 篮子，并且每个篮子只能装 单一类型 的水果。每个篮子能够装的水果总量没有限制。</li>
+<li>你可以选择任意一棵树开始采摘，你必须从 每棵 树（包括开始采摘的树）上 恰好摘一个水果 。采摘的水果应当符合篮子中的水果类型。每采摘一次，你将会向右移动到下一棵树，并继续采摘。</li>
+<li>一旦你走到某棵树前，但水果不符合篮子的水果类型，那么就必须停止采摘。</li>
+</ul>
+<p>给你一个整数数组 fruits ，返回你可以收集的水果的 最大 数目。<br><a href="https://leetcode.cn/problems/fruit-into-baskets/">题目链接</a></p>
+<p>示例 1：</p>
+<ul>
+<li>输入：fruits = [1,2,1]</li>
+<li>输出：3</li>
+<li>解释：可以采摘全部 3 棵树。</li>
+</ul>
+<p>示例 2：</p>
+<ul>
+<li>输入：fruits = [0,1,2,2]</li>
+<li>输出：3</li>
+<li>解释：可以采摘 [1,2,2] 这三棵树。</li>
+<li>如果从第一棵树开始采摘，则只能采摘 [0,1] 这两棵树。</li>
+</ul>
+<p>示例 3：</p>
+<ul>
+<li>输入：fruits = [1,2,3,2,2]</li>
+<li>输出：4</li>
+<li>解释：可以采摘 [2,3,2,2] 这四棵树。</li>
+<li>如果从第一棵树开始采摘，则只能采摘 [1,2] 这两棵树。</li>
+</ul>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>滑动窗口，最大化窗口。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">for 窗口扩大</span><br><span class="line">		while(不满足条件)</span><br><span class="line">		 调整边界，使得条件满足</span><br><span class="line">		计算窗口大小</span><br><span class="line">		loop</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">   <span class="keyword">def</span> <span class="title function_">totalFruit</span>(<span class="params">self, fruits: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">       ans = <span class="number">0</span></span><br><span class="line">       kinds = <span class="number">0</span></span><br><span class="line">       left = <span class="number">0</span></span><br><span class="line">       f = [<span class="number">0</span>]*(<span class="built_in">max</span>(fruits)+<span class="number">1</span>)</span><br><span class="line">       <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(fruits)):</span><br><span class="line">           <span class="keyword">if</span> f[fruits[i]] ==<span class="number">0</span>:</span><br><span class="line">               kinds +=<span class="number">1</span></span><br><span class="line">           f[fruits[i]] +=<span class="number">1</span></span><br><span class="line">           <span class="keyword">while</span>(kinds &gt;<span class="number">2</span>):</span><br><span class="line">               f[fruits[left]] -=<span class="number">1</span></span><br><span class="line">               <span class="keyword">if</span>(f[fruits[left]] == <span class="number">0</span>):</span><br><span class="line">                   kinds -= <span class="number">1</span></span><br><span class="line">               left += <span class="number">1</span></span><br><span class="line">           ans = <span class="built_in">max</span>(ans,i-left+<span class="number">1</span>)</span><br><span class="line">       <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       </span><br></pre></td></tr></table></figure>
 <!-- flag of hidden posts -->]]></content>
       <categories>
         <category>leetcode</category>
