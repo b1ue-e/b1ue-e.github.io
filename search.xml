@@ -299,4 +299,31 @@
         <category>leetcode</category>
       </categories>
   </entry>
+  <entry>
+    <title>26. remove-duplicates-from-sorted-array</title>
+    <url>/2024/11/27/leetcode26/</url>
+    <content><![CDATA[<h1 id="删除有序数组中的重复项"><a href="#删除有序数组中的重复项" class="headerlink" title="删除有序数组中的重复项"></a>删除有序数组中的重复项</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。</p>
+<p>考虑 nums 的唯一元素的数量为 k ，你需要做以下事情确保你的题解可以被通过：</p>
+<ul>
+<li>更改数组 nums ，使 nums 的前 k 个元素包含唯一元素，并按照它们最初在 nums 中出现的顺序排列。nums 的其余元素与 nums 的大小不重要。</li>
+<li>返回 k 。</li>
+</ul>
+<p>示例 1：</p>
+<ul>
+<li>输入：nums = [1,1,2]</li>
+<li>输出：2, nums = [1,2,_]</li>
+<li>解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新长度后面的元素。</li>
+</ul>
+<p>示例 2：</p>
+<ul>
+<li>输入：nums = [0,0,1,1,1,2,2,3,3,4]</li>
+<li>输出：5, nums = [0,1,2,3,4]</li>
+<li>解释：函数应该返回新的长度 5 ， 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4 。不需要考虑数组中超出新长度后面的元素。</li>
+</ul>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，慢指针指向新数组的下标，快指针进行判断，由于数组非严格递增，那么重复元素的下标一定是连续的。 如果发现不重复的元素就添加到新数组下标位置。此题注意边界情况<br><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeDuplicates</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        slow = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[fast] != nums[fast-<span class="number">1</span>]:</span><br><span class="line">                nums[slow] = nums[fast]</span><br><span class="line">                slow += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> slow</span><br><span class="line">        </span><br></pre></td></tr></table></figure></p>
+<!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+  </entry>
 </search>
