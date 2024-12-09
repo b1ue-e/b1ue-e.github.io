@@ -614,4 +614,23 @@
         <tag>链表</tag>
       </tags>
   </entry>
+  <entry>
+    <title>19. remove-nth-node-from-end-of-list</title>
+    <url>/2024/12/09/leetcode19/</url>
+    <content><![CDATA[<h1 id="删除链表倒数第n个节点"><a href="#删除链表倒数第n个节点" class="headerlink" title="删除链表倒数第n个节点"></a>删除链表倒数第n个节点</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。</p>
+<p>示例1：</p>
+<blockquote>
+<p><strong>输入：</strong>  head = [1,2,3,4,5], n = 2<br><strong>输出：</strong> [1,2,3,5]</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>让快指针先行n步，即保持快慢指针的距离是n，那么慢指针指向的节点就是要删除的节点。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">        ListNode* dummynode = <span class="keyword">new</span> <span class="built_in">ListNode</span>(<span class="number">-1</span>);</span><br><span class="line">        dummynode-&gt;next = head;</span><br><span class="line">        ListNode* slow = dummynode;</span><br><span class="line">        ListNode* fast = dummynode;</span><br><span class="line">        <span class="keyword">while</span>(n--&amp;&amp; fast!= <span class="literal">NULL</span>)&#123;</span><br><span class="line">            fast = fast-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        fast = fast-&gt;next;</span><br><span class="line">        <span class="keyword">while</span>(fast != <span class="literal">NULL</span>)&#123;</span><br><span class="line">            fast = fast-&gt;next;</span><br><span class="line">            slow = slow-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        slow-&gt;next = slow-&gt;next-&gt;next;</span><br><span class="line">        head = dummynode-&gt;next;</span><br><span class="line">        <span class="keyword">return</span> head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>链表</tag>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
 </search>
