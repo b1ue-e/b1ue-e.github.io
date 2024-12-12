@@ -709,4 +709,75 @@
         <tag>哈希表</tag>
       </tags>
   </entry>
+  <entry>
+    <title>15. 3sum</title>
+    <url>/2024/12/12/leetcode15/</url>
+    <content><![CDATA[<h1 id="三数之和"><a href="#三数之和" class="headerlink" title="三数之和"></a>三数之和</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，同时还满足 nums[i] + nums[j] + nums[k] == 0 。请你返回所有和为 0 且不重复的三元组。</p>
+<p>注意：答案中不可以包含重复的三元组。</p>
+<p>示例 1：</p>
+<blockquote>
+<p>输入：nums = [-1,0,1,2,-1,-4]<br>输出：[[-1,-1,2],[-1,0,1]]<br>解释：<br>nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0 。<br>nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0 。<br>nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。<br>不同的三元组是 [-1,0,1] 和 [-1,-1,2] 。<br>注意，输出的顺序和三元组的顺序并不重要  </p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>题目的难点主要在于去重逻辑的思考。因为三元组不可以重复，但是三元组内部的元素可以重复。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">threeSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        result = []</span><br><span class="line">        nums.sort()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="comment"># 如果第一个元素已经大于0，不需要进一步检查</span></span><br><span class="line">            <span class="keyword">if</span> nums[i] &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> result</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 跳过相同的元素以避免重复</span></span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i - <span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">                </span><br><span class="line">            left = i + <span class="number">1</span></span><br><span class="line">            right = <span class="built_in">len</span>(nums) - <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> right &gt; left:</span><br><span class="line">                sum_ = nums[i] + nums[left] + nums[right]</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span> sum_ &lt; <span class="number">0</span>:</span><br><span class="line">                    left += <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> sum_ &gt; <span class="number">0</span>:</span><br><span class="line">                    right -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    result.append([nums[i], nums[left], nums[right]])</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment"># 跳过相同的元素以避免重复</span></span><br><span class="line">                    <span class="keyword">while</span> right &gt; left <span class="keyword">and</span> nums[right] == nums[right - <span class="number">1</span>]:</span><br><span class="line">                        right -= <span class="number">1</span></span><br><span class="line">                    <span class="keyword">while</span> right &gt; left <span class="keyword">and</span> nums[left] == nums[left + <span class="number">1</span>]:</span><br><span class="line">                        left += <span class="number">1</span></span><br><span class="line">                        </span><br><span class="line">                    right -= <span class="number">1</span></span><br><span class="line">                    left += <span class="number">1</span></span><br><span class="line">                    </span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a href="https://programmercarl.com/0015.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C.html#%E7%AE%97%E6%B3%95%E5%85%AC%E5%BC%80%E8%AF%BE">programmercarl</a></p>
+<!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>344. reverse-string</title>
+    <url>/2024/12/12/leetcode344/</url>
+    <content><![CDATA[<h1 id="反转字符串"><a href="#反转字符串" class="headerlink" title="反转字符串"></a>反转字符串</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 s 的形式给出。</p>
+<p>不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 O(1) 的额外空间解决这一问题。</p>
+<p>示例1：</p>
+<blockquote>
+<p>输入：s = [“h”,”e”,”l”,”l”,”o”]<br>输出：[“o”,”l”,”l”,”e”,”h”]</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>双指针</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reverseString</span>(<span class="params">self, s: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify s in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="built_in">len</span>(s)-<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span>(left &lt; right):</span><br><span class="line">            s[left],s[right] = s[right],s[left]</span><br><span class="line">            left +=<span class="number">1</span></span><br><span class="line">            right -=<span class="number">1</span></span><br><span class="line"></span><br></pre></td></tr></table></figure><!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>双指针</tag>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>454. 4sum-ii</title>
+    <url>/2024/12/12/leetcode454/</url>
+    <content><![CDATA[<h1 id="四数相加II"><a href="#四数相加II" class="headerlink" title="四数相加II"></a>四数相加II</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你四个整数数组 nums1、nums2、nums3 和 nums4 ，数组长度都是 n ，请你计算有多少个元组 (i, j, k, l) 能满足：  </p>
+<ul>
+<li>0 &lt;= i, j, k, l &lt; n</li>
+<li>nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0</li>
+</ul>
+<p>示例1：</p>
+<blockquote>
+<p>输入：nums1 = [1,2], nums2 = [-2,-1], nums3 = [-1,2], nums4 = [0,2]<br>输出：2<br>解释：<br>两个元组如下：  </p>
+<ol>
+<li>(0, 0, 0, 1) -&gt; nums1[0] + nums2[0] + nums3[0] + nums4[1] = 1 + (-2) + (-1) + 2 = 0  </li>
+<li>(1, 1, 0, 0) -&gt; nums1[1] + nums2[1] + nums3[0] + nums4[0] = 2 + (-1) + (-1) + 0 = 0  </li>
+</ol>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><ol>
+<li>首先定义 一个unordered_map，key放a和b两数之和，value 放a和b两数之和出现的次数。</li>
+<li>遍历大A和大B数组，统计两个数组元素之和，和出现的次数，放到map中。</li>
+<li>定义int变量count，用来统计 a+b+c+d = 0 出现的次数。</li>
+<li>再遍历大C和大D数组，找到如果 0-(c+d) 在map中出现过的话，就用count把map中key对应的value也就是出现次数统计出来。<br>5 .最后返回统计值 count 就可以了</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">fourSumCount</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, vector&lt;<span class="type">int</span>&gt;&amp; nums3, vector&lt;<span class="type">int</span>&gt;&amp; nums4)</span> </span>&#123;</span><br><span class="line">        unordered_map&lt;<span class="type">int</span>,<span class="type">int</span>&gt;mp;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> a:nums1)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> b:nums2)&#123;</span><br><span class="line">                mp[a+b]++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> c:nums3)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> d:nums4)&#123;</span><br><span class="line">                <span class="keyword">if</span>(mp.<span class="built_in">find</span>(<span class="number">0</span>-(c+d))!=mp.<span class="built_in">end</span>())&#123;</span><br><span class="line">                    count += mp[<span class="number">0</span>-(c+d)];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h2><p><a href="https://programmercarl.com/0454.%E5%9B%9B%E6%95%B0%E7%9B%B8%E5%8A%A0II.html#%E6%80%9D%E8%B7%AF">programmercarl</a></p>
+<!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>哈希表</tag>
+      </tags>
+  </entry>
 </search>
