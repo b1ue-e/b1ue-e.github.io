@@ -805,4 +805,23 @@
         <tag>字符串</tag>
       </tags>
   </entry>
+  <entry>
+    <title>1047. remove-all-adjacent-duplicates-in-string</title>
+    <url>/2024/12/17/leetcode1047/</url>
+    <content><![CDATA[<h1 id="删除字符串中的所有相邻重复项"><a href="#删除字符串中的所有相邻重复项" class="headerlink" title="删除字符串中的所有相邻重复项"></a>删除字符串中的所有相邻重复项</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给出由小写字母组成的字符串 s，重复项删除操作会选择两个相邻且相同的字母，并删除它们。</p>
+<p>在 s 上反复执行重复项删除操作，直到无法继续删除。</p>
+<p>在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。</p>
+<p>示例一</p>
+<blockquote>
+<p> 输入：”abbaca”<br>输出：”ca”<br>解释<br>例如，在 “abbaca” 中，我们可以删除 “bb” 由于两字母相邻且相同，这是此时唯一可以执行删除操作的重复项。之后我们得到字符串 “aaca”，其中又只有 “aa” 可以执行重复项删除操作，所以最后的字符串为 “ca”。  </p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>使用栈，如果下一个字符和栈顶相同，那就需要弹出栈内元素，不相同就加入栈。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function">string <span class="title">removeDuplicates</span><span class="params">(string s)</span> </span>&#123;</span><br><span class="line">        stack&lt;<span class="type">char</span>&gt; st;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i =<span class="number">0</span>; i&lt;s.<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(st.<span class="built_in">empty</span>() || s[i] != st.<span class="built_in">top</span>())&#123;</span><br><span class="line">                st.<span class="built_in">push</span>(s[i]);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                st.<span class="built_in">pop</span>();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        string res = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        <span class="keyword">while</span>(!st.<span class="built_in">empty</span>())&#123;</span><br><span class="line">            res += st.<span class="built_in">top</span>();</span><br><span class="line">            st.<span class="built_in">pop</span>();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">reverse</span>(res.<span class="built_in">begin</span>(),res.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure><!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>栈</tag>
+      </tags>
+  </entry>
 </search>
