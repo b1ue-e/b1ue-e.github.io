@@ -780,4 +780,29 @@
         <tag>哈希表</tag>
       </tags>
   </entry>
+  <entry>
+    <title>151. reverse-words-in-a-string</title>
+    <url>/2024/12/13/leetcode151/</url>
+    <content><![CDATA[<h1 id="反转字符串中的单词"><a href="#反转字符串中的单词" class="headerlink" title="反转字符串中的单词"></a>反转字符串中的单词</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个字符串 s ，请你反转字符串中 单词 的顺序。</p>
+<p>单词 是由非空格字符组成的字符串。s 中使用至少一个空格将字符串中的 单词 分隔开。</p>
+<p>返回 单词 顺序颠倒且 单词 之间用单个空格连接的结果字符串。</p>
+<p>注意：输入字符串 s中可能会存在前导空格、尾随空格或者单词间的多个空格。返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空格。</p>
+<p>示例 1：</p>
+<blockquote>
+<p>输入：s = “the sky is blue”<br>输出：”blue is sky the”</p>
+</blockquote>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>总共分为三步：</p>
+<ol>
+<li>删除多余的空格</li>
+<li>反转整个字符串</li>
+<li>反转每一个word</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reverseWords</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        s = s.strip()</span><br><span class="line">        s = s[::-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27; &#x27;</span>.join(word[::-<span class="number">1</span>] <span class="keyword">for</span> word <span class="keyword">in</span> s.split())</span><br></pre></td></tr></table></figure><!-- flag of hidden posts -->]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>字符串</tag>
+      </tags>
+  </entry>
 </search>
