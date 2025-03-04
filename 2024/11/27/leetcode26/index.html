@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="删除有序数组中的重复项题目给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。 考虑 nums 的唯一元素的数量为 k ，你需要做以下事情确保你的题解可以被通过：  更改数组 nums ，使 nums 的前 k 个元素包含唯一元素，并按照它们最初在">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>26. remove-duplicates-from-sorted-array | </title>
+  <title>26. remove-duplicates-from-sorted-array | </title><meta name="robots" content="noindex">
   
 
 
@@ -255,18 +255,18 @@
 </ul>
 <p>示例 1：</p>
 <ul>
-<li>输入：nums &#x3D; [1,1,2]</li>
-<li>输出：2, nums &#x3D; [1,2,_]</li>
+<li>输入：nums = [1,1,2]</li>
+<li>输出：2, nums = [1,2,_]</li>
 <li>解释：函数应该返回新的长度 2 ，并且原数组 nums 的前两个元素被修改为 1, 2 。不需要考虑数组中超出新长度后面的元素。</li>
 </ul>
 <p>示例 2：</p>
 <ul>
-<li>输入：nums &#x3D; [0,0,1,1,1,2,2,3,3,4]</li>
-<li>输出：5, nums &#x3D; [0,1,2,3,4]</li>
+<li>输入：nums = [0,0,1,1,1,2,2,3,3,4]</li>
+<li>输出：5, nums = [0,1,2,3,4]</li>
 <li>解释：函数应该返回新的长度 5 ， 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4 。不需要考虑数组中超出新长度后面的元素。</li>
 </ul>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，慢指针指向新数组的下标，快指针进行判断，由于数组非严格递增，那么重复元素的下标一定是连续的。 如果发现不重复的元素就添加到新数组下标位置。此题注意边界情况</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeDuplicates</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        slow = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[fast] != nums[fast-<span class="number">1</span>]:</span><br><span class="line">                nums[slow] = nums[fast]</span><br><span class="line">                slow += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> slow</span><br><span class="line">        </span><br></pre></td></tr></table></figure>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，慢指针指向新数组的下标，快指针进行判断，由于数组非严格递增，那么重复元素的下标一定是连续的。 如果发现不重复的元素就添加到新数组下标位置。此题注意边界情况<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">removeDuplicates</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        slow = <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="built_in">len</span>(nums)):</span><br><span class="line">            <span class="keyword">if</span> nums[fast] != nums[fast-<span class="number">1</span>]:</span><br><span class="line">                nums[slow] = nums[fast]</span><br><span class="line">                slow += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> slow</span><br><span class="line">        </span><br></pre></td></tr></table></figure></p>
+<!-- flag of hidden posts -->
     </div>
 
     
@@ -279,16 +279,6 @@
 
 
         
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2024/11/27/leetcode977/" rel="prev" title="977. squares-of-a-sorted-array">
-      <i class="fa fa-chevron-left"></i> 977. squares-of-a-sorted-array
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/11/27/leetcode904/" rel="next" title="904. fruit-into-baskets">
-      904. fruit-into-baskets <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
       </footer>
     
   </article>
@@ -362,7 +352,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

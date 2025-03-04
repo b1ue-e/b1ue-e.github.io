@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="ABSTRACT学习复杂的网络动力学是理解、模拟和控制现实世界复杂系统的基础。尽管人们在预测网络节点的未来状态方面做出了巨大努力，但捕捉长期动态的能力在很大程度上仍然有限。这是因为他们忽略了一个事实，即复杂网络的长期动态主要受其固有的低维流形（即骨架）支配。因此，我们提出了动态不变骨架神经网络（DiskNet），它基于双曲空间的重整化群结构来识别复杂网络的骨架，从而同时保留拓扑和动力学特性。具体来">
@@ -27,15 +27,15 @@
 <meta property="og:site_name">
 <meta property="og:description" content="ABSTRACT学习复杂的网络动力学是理解、模拟和控制现实世界复杂系统的基础。尽管人们在预测网络节点的未来状态方面做出了巨大努力，但捕捉长期动态的能力在很大程度上仍然有限。这是因为他们忽略了一个事实，即复杂网络的长期动态主要受其固有的低维流形（即骨架）支配。因此，我们提出了动态不变骨架神经网络（DiskNet），它基于双曲空间的重整化群结构来识别复杂网络的骨架，从而同时保留拓扑和动力学特性。具体来">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/DiskNet/model.png">
-<meta property="og:image" content="http://example.com/DiskNet/tree.png">
+<meta property="og:image" content="http://example.com/2024/11/13/DiskNet/model.png">
+<meta property="og:image" content="http://example.com/2024/11/13/DiskNet/tree.png">
 <meta property="article:published_time" content="2024-11-13T07:43:28.000Z">
 <meta property="article:modified_time" content="2024-11-15T03:31:04.000Z">
 <meta property="article:author" content="Blue">
 <meta property="article:tag" content="Graph">
 <meta property="article:tag" content="Dynamics">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/DiskNet/model.png">
+<meta name="twitter:image" content="http://example.com/2024/11/13/DiskNet/model.png">
 
 <link rel="canonical" href="http://example.com/2024/11/13/DiskNet/">
 
@@ -276,45 +276,36 @@
 <li><p>在五个真实网络拓扑和两个合成网络拓扑的三个代表性网络动态上进行的大量实验结果表明，DiskNet 的预测准确率平均比最先进的基线高出 10.18%，这表明了它的优越性。</p>
 </li>
 </ul>
-<h1 id="2-PROBLEM-FORMULATION"><a href="#2-PROBLEM-FORMULATION" class="headerlink" title="2 PROBLEM FORMULATION"></a>2 PROBLEM FORMULATION</h1><p>在不失一般性的前提下，网络拓扑由邻接矩阵 $A \in {0, 1}^{N \times N}$ 表示，其中每个元素 $a_{ij}&#x3D; 1$  表示节点 i 和 j 之间的连接。网络动力学描述了图 G 上节点状态的演化，其中考虑了每个节点的自动力学以及与其邻居的交互作用，其方程为<br>$$ \frac{dx_i}{dt} &#x3D; f(x_i) + \sum^{N}<em>{j \neq i}{a</em>{ij}g(x_i,x_j)} $$</p>
-<p>其中，f 表示自动力学，g 表示节点间的耦合动力学。节点状态矩阵表示为 $\textbf{X} \in \mathbb{R}^{N \times L \times d}$ ，代表在连续的 L 个时间步序列中 N 个节点的 d 维状态的观测值。</p>
-<p>此外，我们认为图 G 的骨架为 $G_s &#x3D; (\mathcal{V}<em>s, A_s)$，其中 $A_s \in {0, 1}^{\gamma N \times \gamma N}$ 描述了集合 $\mathbb{V}<em>s$ 中超级节点（定义为原始节点的聚合）之间的连接。这里，γ 表示骨架相对于原始拓扑的缩减率、given by $γ &#x3D; \frac{V_s}{V}$ .超级节点与原始节点之间的对应关系由赋值矩阵 $P \in {0, 1}^{\gamma N \times N}$ 定义，其中 $p</em>{ij} &#x3D; 1$ 表示节点 j 被聚合为超级节点 i。函数 $x</em>{s,i}&#x3D;u(x_{P_i})$  描述了超级节点 i 的状态如何从其子节点汇总而来。骨架上网络的动态定义与公式 1 相同，表示为 $\frac{dx_{s,i}}{dt}$。超级节点的状态通过提升函数 v 映射回其子节点，即 $x_i &#x3D; v(x_{s,i})$ 。我们强调，通过聚合而非剪枝获得网络骨架的目的是将相似节点的集体动态整合为一个具有代表性的超级节点。</p>
-<p>我们的目标是确定赋值矩阵 P、状态聚合函数 u 和提升函数 v，从而建立图 G 的低维骨架 $G_s$ 。随后，通过在骨架上建立动态模型 $\frac{dx_{s,i}}{dt}$ 并将其映射回子节点，我们的目标是在给定历史观测值 $X_{lookback}$ 的情况下，实现对节点状态长期演化 $X_{horizon}$ 的准确预测。整个过程如图 1 所示</p>
+<h1 id="2-PROBLEM-FORMULATION"><a href="#2-PROBLEM-FORMULATION" class="headerlink" title="2 PROBLEM FORMULATION"></a>2 PROBLEM FORMULATION</h1><p>在不失一般性的前提下，网络拓扑由邻接矩阵 $A \in {0, 1}^{N \times N}$ 表示，其中每个元素 $a_{ij}= 1$  表示节点 i 和 j 之间的连接。网络动力学描述了图 G 上节点状态的演化，其中考虑了每个节点的自动力学以及与其邻居的交互作用，其方程为</p>
+<script type="math/tex; mode=display">\frac{dx_i}{dt} = f(x_i) + \sum^{N}_{j \neq i}{a_{ij}g(x_i,x_j)}</script><p>其中，f 表示自动力学，g 表示节点间的耦合动力学。节点状态矩阵表示为 $\textbf{X} \in \mathbb{R}^{N \times L \times d}$ ，代表在连续的 L 个时间步序列中 N 个节点的 d 维状态的观测值。</p>
+<p>此外，我们认为图 G 的骨架为 $G<em>s = (\mathcal{V}_s, A_s)$，其中 $A_s \in {0, 1}^{\gamma N \times \gamma N}$ 描述了集合 $\mathbb{V}_s$ 中超级节点（定义为原始节点的聚合）之间的连接。这里，γ 表示骨架相对于原始拓扑的缩减率、given by $γ = \frac{V_s}{V}$ .超级节点与原始节点之间的对应关系由赋值矩阵 $P \in {0, 1}^{\gamma N \times N}$ 定义，其中 $p</em>{ij} = 1$ 表示节点 j 被聚合为超级节点 i。函数 $x<em>{s,i}=u(x</em>{P<em>i})$  描述了超级节点 i 的状态如何从其子节点汇总而来。骨架上网络的动态定义与公式 1 相同，表示为 $\frac{dx</em>{s,i}}{dt}$。超级节点的状态通过提升函数 v 映射回其子节点，即 $x<em>i = v(x</em>{s,i})$ 。我们强调，通过聚合而非剪枝获得网络骨架的目的是将相似节点的集体动态整合为一个具有代表性的超级节点。</p>
+<p>我们的目标是确定赋值矩阵 P、状态聚合函数 u 和提升函数 v，从而建立图 G 的低维骨架 $G<em>s$ 。随后，通过在骨架上建立动态模型 $\frac{dx</em>{s,i}}{dt}$ 并将其映射回子节点，我们的目标是在给定历史观测值 $X<em>{lookback}$ 的情况下，实现对节点状态长期演化 $X</em>{horizon}$ 的准确预测。整个过程如图 1 所示</p>
 <h1 id="3-METHOD"><a href="#3-METHOD" class="headerlink" title="3 METHOD"></a>3 METHOD</h1><p><code>在本节中，我们将提出动态不变骨架神经网络（DiskNet），通过识别双曲空间中的骨架来预测复杂网络的长期动态。整体框架如图 2 所示。根据上述挑战，我们首先提出了双曲重整化群（RG）模块，利用双曲几何的强大表示能力捕捉节点的拓扑和动态相似性，并自适应计算赋值矩阵，指导节点赋值和动态聚合。然后，设计了一个神经 ODE 模型来模拟骨架上超级节点的神经动力学，其中包含两种机制：自我动力学和邻居相互作用。最后，提出了一个基于度聚类的超分辨率模块，将骨架上的动态表示提升到原始节点上。</code></p>
 <h2 id="3-1-Hyperbolic-Renormalization-Group"><a href="#3-1-Hyperbolic-Renormalization-Group" class="headerlink" title="3.1 Hyperbolic Renormalization Group"></a>3.1 Hyperbolic Renormalization Group</h2><p>给定复杂网络的邻接矩阵 A，识别网络骨架 $A_s$ 的关键在于根据网络的拓扑特性和节点动态的潜在相似性确定赋值矩阵 P。我们在双曲空间 [26] 中测量原始节点和超级节点之间的相似性。在此基础上，我们推导出一个自适应分配矩阵，为每个超级节点聚合子节点的动态表示，该矩阵共同包含拓扑和动态特征。我们通过初始化超级节点的双曲嵌入来引入先验物理知识，从而指导模型训练。</p>
 <p><em>3.1.1 learnable hyperbolic embedding</em> 庞加莱盘是一种二维双曲几何，负曲率特性使节点嵌入之间的双曲距离与它们在图中的距离相一致。相同维度的双曲空间比欧几里得空间容量更大，因此更适合表示大规模网络中节点的拓扑和动态信息。庞加莱盘上两点之间的距离为</p>
-<p>$$ d^c_H(x,y)&#x3D;\frac{1}{\sqrt{|c|}}\mathrm{arcosh}(1-\frac{2c||x-y||^2}{(1+c||x||^2)(1+c||y||^2)}) $$</p>
-<p>以前的工作主要是学习网络拓扑的双曲嵌入 $C^H \in R^{N \times 2}$ ，初始化后将其冻结在 DiskNet 中，用于对原始拓扑进行分层表示。我们的核心理念是为每个超级节点维护一个可学习的双曲嵌入 $C^H_s \in R^{\gamma N \times 2}$ ， 以捕捉其所有子节点的动态特征.我们首先根据第 4.3.4 节所述方法初始化 $C_s^H$ ，引入先验物理知识，然后在端到端训练过程中对其进行微调。考虑到在欧几里得空间定义的计算规则不适用于双曲空间的矢量，我们使用对数映射将 $C^H$ 和 $C^H_s$ 投影到相应的欧几里得坐标上。</p>
-<p>$$\theta^E_z&#x3D;\frac{2}{\sqrt{|c|}\lambda^c_z}\mathrm{arctanh}(\sqrt{|c|} ||-z \oplus_c \theta^H||)\frac{-z \oplus_c \theta^H}{||-z \oplus_c \theta^H||}$$</p>
-<p>其中，$\oplus_c$ 表示莫比乌斯加法 [30]， $\lambda^c_x&#x3D;\frac{2}{1+c||x||^2}$ 。  $\theta^H$ and $\theta^E$ 分别表示双曲空间和欧几里得空间中的向量。与大多数研究[26, 32, 34, 42]一致，双曲流形的切线空间选在原点 $\mathbb{O}$，曲率设为-1。我们将在第 4.3.2 节中详细验证双曲嵌入在表示节点拓扑和动态相似性方面的优越性。</p>
+<script type="math/tex; mode=display">d^c_H(x,y)=\frac{1}{\sqrt{|c|}}\mathrm{arcosh}(1-\frac{2c||x-y||^2}{(1+c||x||^2)(1+c||y||^2)})</script><p>以前的工作主要是学习网络拓扑的双曲嵌入 $C^H \in R^{N \times 2}$ ，初始化后将其冻结在 DiskNet 中，用于对原始拓扑进行分层表示。我们的核心理念是为每个超级节点维护一个可学习的双曲嵌入 $C^H_s \in R^{\gamma N \times 2}$ ， 以捕捉其所有子节点的动态特征.我们首先根据第 4.3.4 节所述方法初始化 $C_s^H$ ，引入先验物理知识，然后在端到端训练过程中对其进行微调。考虑到在欧几里得空间定义的计算规则不适用于双曲空间的矢量，我们使用对数映射将 $C^H$ 和 $C^H_s$ 投影到相应的欧几里得坐标上。</p>
+<script type="math/tex; mode=display">\theta^E_z=\frac{2}{\sqrt{|c|}\lambda^c_z}\mathrm{arctanh}(\sqrt{|c|} ||-z \oplus_c \theta^H||)\frac{-z \oplus_c \theta^H}{||-z \oplus_c \theta^H||}</script><p>其中，$\oplus_c$ 表示莫比乌斯加法 [30]， $\lambda^c_x=\frac{2}{1+c||x||^2}$ 。  $\theta^H$ and $\theta^E$ 分别表示双曲空间和欧几里得空间中的向量。与大多数研究[26, 32, 34, 42]一致，双曲流形的切线空间选在原点 $\mathbb{O}$，曲率设为-1。我们将在第 4.3.2 节中详细验证双曲嵌入在表示节点拓扑和动态相似性方面的优越性。</p>
 <p><em>3.1.2 Adaptive assignment matrix.</em> 根据原始节点和超级节点的双曲嵌入，我们计算出自适应赋值矩阵为</p>
-<p>$$ P &#x3D; {\rm softmax}(\tilde{C}_s\tilde{C}^T) $$</p>
-<p>其中，softmax 按行计算，$\tilde{C} &#x3D; MLP(C^E)$ 和 $\tilde{C}<em>s &#x3D; MLP(C^E_s)$。我们最小化$L_E&#x3D;\frac{1}{N}\sum^N</em>{i&#x3D;1}{H(P_i)}$，其中 H 表示熵函数，$P_i$ 是 P 的第 i 列，以限制赋值矩阵的每一列都接近单热向量。此外，我们最小化 $L_R&#x3D;||A,P^TP||_F$ 来启发式地引导赋值矩阵保持原始拓扑的骨架，其中 $||\cdot||_F$ 表示弗罗贝尼斯规范。</p>
+<script type="math/tex; mode=display">P = {\rm softmax}(\tilde{C}_s\tilde{C}^T)</script><p>其中，softmax 按行计算，$\tilde{C} = MLP(C^E)$ 和 $\tilde{C}<em>s = MLP(C^E_s)$。我们最小化$L_E=\frac{1}{N}\sum^N</em>{i=1}{H(P_i)}$，其中 H 表示熵函数，$P_i$ 是 P 的第 i 列，以限制赋值矩阵的每一列都接近单热向量。此外，我们最小化 $L_R=||A,P^TP||_F$ 来启发式地引导赋值矩阵保持原始拓扑的骨架，其中 $||\cdot||_F$ 表示弗罗贝尼斯规范。</p>
 <p><em>3.1.3 Node dynamics aggregation.</em> 我们采用图卷积神经网络来捕捉原始节点的动态传播，并将其聚合为超级节点的动态表示，即</p>
-<p>$$           H &#x3D; \sigma((\tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}} X) \Theta_1) \in \mathbb{R}^{N \times d},  $$<br>$$ X_s &#x3D; PH \in \mathbb{R}^{\gamma N \times d}$$</p>
-<p>其中，$\tilde{D} &#x3D; \sum_{j}{\tilde{A}<em>{ij}}$，$\tilde{A} &#x3D; A + I$,$\Theta$ 为可学习参数。超级节点之间的连接由邻接矩阵 $A_s &#x3D; PAP^T$ 描述，其中元素 $a</em>{s,ij}$ 表示超级节点内部（i &#x3D; j）或不同超级节点之间（i≠ j）的子节点连接总数。</p>
-<p><em>3.1.4 Physics-informed initialization.</em> 统计物理学将节点相似度的意义赋予节点嵌入波恩卡莱盘的角坐标，并采用基于角坐标的重整化群[14]。这种设计有助于保留骨架中网络拓扑的度分布和聚类系数。虽然这种方法不能保证有效地表示网络动态，但 DiskNet 可以在随后的端到端训练中自动调整超节点的可学习双曲嵌入。因此，我们根据角坐标对原始节点进行排序，并将其划分为  $\frac{1}{\gamma}$ 个节点的节点组，以预先定义赋值矩阵 $P_0$ ，用于预训练自适应赋值模块，其损失函数为 $L_p &#x3D; \frac{1}{\gamma N^2}\sum{|P-P_0|}$。我们在附录 C 中提供了预训练阶段的伪代码。超级节点的双曲嵌入初始值设为 $c^H_{s,i} &#x3D; \frac{1}{|P_{0,i}|}\sum_{j \in P_{0,i}}{c^H_j}$，其中 $P_{0,i}$ 表示属于超级节点 i 的子节点集。</p>
+<script type="math/tex; mode=display">H = \sigma((\tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}} X) \Theta_1) \in \mathbb{R}^{N \times d},</script><script type="math/tex; mode=display">X_s = PH \in \mathbb{R}^{\gamma N \times d}</script><p>其中，$\tilde{D} = \sum<em>{j}{\tilde{A}</em>{ij}}$，$\tilde{A} = A + I$,$\Theta$ 为可学习参数。超级节点之间的连接由邻接矩阵 $A<em>s = PAP^T$ 描述，其中元素 $a</em>{s,ij}$ 表示超级节点内部（i = j）或不同超级节点之间（i≠ j）的子节点连接总数。</p>
+<p><em>3.1.4 Physics-informed initialization.</em> 统计物理学将节点相似度的意义赋予节点嵌入波恩卡莱盘的角坐标，并采用基于角坐标的重整化群[14]。这种设计有助于保留骨架中网络拓扑的度分布和聚类系数。虽然这种方法不能保证有效地表示网络动态，但 DiskNet 可以在随后的端到端训练中自动调整超节点的可学习双曲嵌入。因此，我们根据角坐标对原始节点进行排序，并将其划分为  $\frac{1}{\gamma}$ 个节点的节点组，以预先定义赋值矩阵 $P<em>0$ ，用于预训练自适应赋值模块，其损失函数为 $L_p = \frac{1}{\gamma N^2}\sum{|P-P_0|}$。我们在附录 C 中提供了预训练阶段的伪代码。超级节点的双曲嵌入初始值设为 $c^H</em>{s,i} = \frac{1}{|P<em>{0,i}|}\sum</em>{j \in P<em>{0,i}}{c^H_j}$，其中 $P</em>{0,i}$ 表示属于超级节点 i 的子节点集。</p>
 <h2 id="3-2-Neural-Dynamics-on-Skeleton"><a href="#3-2-Neural-Dynamics-on-Skeleton" class="headerlink" title="3.2 Neural Dynamics on Skeleton"></a>3.2 Neural Dynamics on Skeleton</h2><p>在获得网络动力学骨架和超级节点的聚合状态后，我们将网络动力学形式保持为公式 1，并使用神经 ODE 对其进行建模</p>
 <p><em>3.2.1 ODE function</em></p>
-<p>现在我们定义骨架潜在动力学 $\frac{dZ_s}{dt}$ 的前向 ODE 函数。考虑到每个超级节点 $x_{s,i}$ 的演化受其自身动力学和耦合动力学的影响，参数化的时间导数由两部分组成：一部分是自动力学函数 $f(Z_s)$ ，另一部分代表与邻近节点的相互作用 $g(Z_s, A_s)$。因此，每个超级节点的动态方程为</p>
-<p>$$ \frac{dZ_s}{dt} &#x3D; f(Z_s) + g(Z_s, A_s)$$ </p>
-<p>其中，f 是 MLP，g 是负责信息传播的 GNN</p>
-<p>$$ g(Z_s, A_s) &#x3D; \sigma(A\sigma(Z_s\Theta_3)\Theta_2) .$$</p>
-<p><em>3.2.2 Solve</em> 给定 ODE 函数后，骨架动力学的预测轨迹可由任何 ODE 求解器作为初值问题求解</p>
-<p>$$ Z_{s,T} &#x3D; Z_{s,0} + \int^T_0{f(Z_{s,t}) + g(Z_{s,t}, A_s) dt} $$</p>
-<p>其中，初始状态 $Z_{s,0} &#x3D; MLP(X_s) \in \mathbb{R}^{\gamma N \times 1}$。这样，我们就可以预测超级节点在任意连续时间点 T 的状态。</p>
+<p>现在我们定义骨架潜在动力学 $\frac{dZ<em>s}{dt}$ 的前向 ODE 函数。考虑到每个超级节点 $x</em>{s,i}$ 的演化受其自身动力学和耦合动力学的影响，参数化的时间导数由两部分组成：一部分是自动力学函数 $f(Z_s)$ ，另一部分代表与邻近节点的相互作用 $g(Z_s, A_s)$。因此，每个超级节点的动态方程为</p>
+<script type="math/tex; mode=display">\frac{dZ_s}{dt} = f(Z_s) + g(Z_s, A_s)</script><p>其中，f 是 MLP，g 是负责信息传播的 GNN</p>
+<script type="math/tex; mode=display">g(Z_s, A_s) = \sigma(A\sigma(Z_s\Theta_3)\Theta_2) .</script><p><em>3.2.2 Solve</em> 给定 ODE 函数后，骨架动力学的预测轨迹可由任何 ODE 求解器作为初值问题求解</p>
+<script type="math/tex; mode=display">Z_{s,T} = Z_{s,0} + \int^T_0{f(Z_{s,t}) + g(Z_{s,t}, A_s) dt}</script><p>其中，初始状态 $Z_{s,0} = MLP(X_s) \in \mathbb{R}^{\gamma N \times 1}$。这样，我们就可以预测超级节点在任意连续时间点 T 的状态。</p>
 <h2 id="3-3-Lift-to-Original-Nodes"><a href="#3-3-Lift-to-Original-Nodes" class="headerlink" title="3.3 Lift to Original Nodes"></a>3.3 Lift to Original Nodes</h2><p>在获得骨架上超级节点的预测轨迹后，需要将其提升回原图中的每个独立节点，以完成网络动态预测。然而，在超级节点的聚合过程中，不可避免地会出现信息丢失，例如同一超级节点内子节点状态的异质性。简单地将超级节点的预测值复制到其子节点上并不足以实现准确的扩展。为了克服这一难题，受统计物理学研究的启发 [13, 29]，我们设计了一个基于度聚类的超级分辨率模块。</p>
 <p><em>3.3.1 Degree-based clustering.</em> 通过采用程度加权平均场方法，可以将程度相似节点的状态和临界点压缩到一个超级节点中进行预测 [13, 27, 29] 。这意味着节点的集体动态表现出了与节点度数有关的同质性。受此启发，考虑到现实世界的网络通常遵循幂律分布，我们选择使用度数对数作为特征，通过 K-means 算法对节点进行聚类，并在每个聚类中执行超分辨率。事实上，在 Poincaré 磁盘中，节点的度数直接对应于其径向坐标。因此，具有相似径向坐标的节点应被识别为属于同一个超级节点。</p>
-<p><em>3.3.2 Super-resolution.</em> 基于骨架动态的有效表示，超分辨率模块的设计不需要太复杂。我们用 $N_c$ 表示第 c 个集群中的节点集，用 Xc 表示它们的历史观测值，用 $Z_{c,T}$ 表示相应超级节点的预测值。由于扩展操作只是简单地将超级节点的预测值复制到其子节点，而不进行区分，因此 Zc,T 是对每个节点的粗略和同质预测。我们根据历史观测值 $X_c$ 对 $Z_{c,T}$ 进行细化，得到精确预测值为</p>
-<p>$$ X_{c,T} &#x3D; \sigma((h_0 || h_1)\Theta_4) $$</p>
-<p>其中 || 表示连接操作， $h_0 &#x3D; MLP(X_c)$ and $h_1 &#x3D; MLP(Z_{c,T})$ 。这样，我们就完成了网络动态预测。我们将在第 4.4.2 节中证明，随着集群数 k 的增加，预测精度将迅速达到上限。因此，有限的 k 设置足以实现良好的预测性能。</p>
-<h2 id="3-4-Training"><a href="#3-4-Training" class="headerlink" title="3.4 Training"></a>3.4 Training</h2><p>现在我们介绍 DiskNet 的训练过程。在开始端到端训练之前，我们首先初始化原始节点和超级节点的双曲嵌入（如第 4.3.4 节所述），并利用先前的物理知识预训练自适应赋值模块。随后，在每次迭代中，模型都会在损失函数 LE 和 LR 的指导下学习自适应分配矩阵。骨架动态预测使用 L2 误差进行更新，即 $L_s &#x3D; MSE(\overline{Z}<em>{s,T}, Z</em>{s,T})$ ，其中 $\overline{Z}<em>{s,T}$ 代表超级节点的预测状态，$Z</em>{s,T}$ 是根据赋值矩阵和状态编码器获得的基本真实值。最后，利用所有原始节点预测的 L2 误差 $L_p &#x3D; MSE(\overline{X}_T, X_T)$ 更新超分辨率模块。由于 Poincaré 盘是欧几里得空间的保角映射，因此在用梯度更新节点嵌入时，必须根据黎曼度量张量来缩放梯度。</p>
-<p>$$ \nabla_H(\theta) &#x3D; (\frac{1-||\theta||}{2})^2 \nabla_E(\theta) $$</p>
-<p>其中，$\nabla_E(\theta)$ 和 $\nabla_H(\theta)$ 分别是向量 θ 的欧氏梯度和双曲梯度。完成端到端训练后，我们分别对超分辨率模块进行微调，以提高预测性能。</p>
-<p><img src="/DiskNet/model.png" alt="model"></p>
+<p><em>3.3.2 Super-resolution.</em> 基于骨架动态的有效表示，超分辨率模块的设计不需要太复杂。我们用 $N<em>c$ 表示第 c 个集群中的节点集，用 Xc 表示它们的历史观测值，用 $Z</em>{c,T}$ 表示相应超级节点的预测值。由于扩展操作只是简单地将超级节点的预测值复制到其子节点，而不进行区分，因此 Zc,T 是对每个节点的粗略和同质预测。我们根据历史观测值 $X<em>c$ 对 $Z</em>{c,T}$ 进行细化，得到精确预测值为</p>
+<script type="math/tex; mode=display">X_{c,T} = \sigma((h_0 || h_1)\Theta_4)</script><p>其中 || 表示连接操作， $h<em>0 = MLP(X_c)$ and $h_1 = MLP(Z</em>{c,T})$ 。这样，我们就完成了网络动态预测。我们将在第 4.4.2 节中证明，随着集群数 k 的增加，预测精度将迅速达到上限。因此，有限的 k 设置足以实现良好的预测性能。</p>
+<h2 id="3-4-Training"><a href="#3-4-Training" class="headerlink" title="3.4 Training"></a>3.4 Training</h2><p>现在我们介绍 DiskNet 的训练过程。在开始端到端训练之前，我们首先初始化原始节点和超级节点的双曲嵌入（如第 4.3.4 节所述），并利用先前的物理知识预训练自适应赋值模块。随后，在每次迭代中，模型都会在损失函数 LE 和 LR 的指导下学习自适应分配矩阵。骨架动态预测使用 L2 误差进行更新，即 $L<em>s = MSE(\overline{Z}</em>{s,T}, Z<em>{s,T})$ ，其中 $\overline{Z}</em>{s,T}$ 代表超级节点的预测状态，$Z_{s,T}$ 是根据赋值矩阵和状态编码器获得的基本真实值。最后，利用所有原始节点预测的 L2 误差 $L_p = MSE(\overline{X}_T, X_T)$ 更新超分辨率模块。由于 Poincaré 盘是欧几里得空间的保角映射，因此在用梯度更新节点嵌入时，必须根据黎曼度量张量来缩放梯度。</p>
+<script type="math/tex; mode=display">\nabla_H(\theta) = (\frac{1-||\theta||}{2})^2 \nabla_E(\theta)</script><p>其中，$\nabla_E(\theta)$ 和 $\nabla_H(\theta)$ 分别是向量 θ 的欧氏梯度和双曲梯度。完成端到端训练后，我们分别对超分辨率模块进行微调，以提高预测性能。</p>
+<img src="/2024/11/13/DiskNet/model.png" class="" title="model">
 <h1 id="4-EXPERIMENTS"><a href="#4-EXPERIMENTS" class="headerlink" title="4 EXPERIMENTS"></a>4 EXPERIMENTS</h1><p>在本节中，我们将介绍 DiskNet 的评估结果。我们首先介绍了用于测试的动态和网络拓扑结构，然后介绍了用于比较的基线。然后，我们分析了长期预测性能、识别骨架的可解释性以及敏感性分析。附录 B 提供了所有实验的软件和硬件环境的详细信息。</p>
 <h2 id="4-1-Experiment-Setup"><a href="#4-1-Experiment-Setup" class="headerlink" title="4.1 Experiment Setup"></a>4.1 Experiment Setup</h2><p>我们对三个具有代表性的非线性动态系统进行了实验，在五个真实世界的网络拓扑结构和两个合成拓扑结构上运行。有关数据集生成的详细信息，请参见附录 A.2。</p>
-<p>4.1.1 Network Topology.  我们考虑了基础设施、社交网络、大脑网络和万维网 1 中的五个真实世界网络拓扑结构[36]：(a) 美国的电网（PowerGrid）；(b) 果蝇的大脑网络；(c) 互赞的 Facebook 页面（Social）；(d) 链接到 <a target="_blank" rel="noopener" href="http://www.epa.gov/">www.epa.gov</a> 的页面（Web）；(e) 两个非美国机场之间的联系（Airport）。此外，我们还考虑了两个合成网络：(f) Barabási-Albert 网络 (BA) [3]；(g) Watts-Strogatz 网络 (WS) [43]。所有拓扑结构的统计特征如表 1 所示。</p>
+<p>4.1.1 Network Topology.  我们考虑了基础设施、社交网络、大脑网络和万维网 1 中的五个真实世界网络拓扑结构[36]：(a) 美国的电网（PowerGrid）；(b) 果蝇的大脑网络；(c) 互赞的 Facebook 页面（Social）；(d) 链接到 www.epa.gov 的页面（Web）；(e) 两个非美国机场之间的联系（Airport）。此外，我们还考虑了两个合成网络：(f) Barabási-Albert 网络 (BA) [3]；(g) Watts-Strogatz 网络 (WS) [43]。所有拓扑结构的统计特征如表 1 所示。</p>
 <p>4.1.2 Network Dynamics. 我们考虑了生物学和物理学中三种有代表性的动力学：(a) Hindmarsh-Rose 动力学[6]，(b) FitzHugh-Nagumo 动力学[12]，(c) Coupled Rössler 动力学[1]。相关方程和参数设置详见附录 A.1</p>
 <h2 id="4-2-Baseline"><a href="#4-2-Baseline" class="headerlink" title="4.2 Baseline"></a>4.2 Baseline</h2><p>在所有数据集上，我们与以下基于 GNN 的最先进方法进行了比较</p>
 <ul>
@@ -338,10 +329,10 @@
 <p>120 个时间步的平均性能如表 1 所示。值得注意的是，在几乎所有情况下，DiskNet 的长期预测性能都远远优于所有基线，在某些情况下提高幅度超过 50%。此外，我们还可以观察到，即使是最先进的模型，次优模型在不同场景下也会有所不同，这表明它们的性能存在波动。这一方面表明，我们的方法能够在各种情况下准确识别网络动力学骨架并建立模型。另一方面，它也强调了低维骨架对于稳定、准确的长期预测的重要性。相比之下，同样采用图神经 ODE 的 NCDN 和 MTGODE 模型只在少数情况下表现良好，这可能是因为它们对整个网络进行建模时，没有有效地聚合节点的关键集体行为。</p>
 <p>4.3.2 Dynamics Skeleton. 然后，我们通过对比实验和可视化分析来研究 DiskNet 所识别的动态骨架。我们比较了启发式、图池和重整化组等五种基线方法：(a) 随机分配；(b) 基于节点度的阈值分配；(c) 基于中心度的阈值分配；(d) DiffPool [49]；(e) GMPool [21]；(f) 静态 RG [14]。前三种方法都是根据一定的规则选择超级节点，然后将子节点随机分配给超级节点。两种图池方法的赋值规则与原论文一致。RG 方法仅根据节点的拓扑特征分配节点，因此被称为静态 RG。在所有实验中，为确保公平性，在使用基线获得分配矩阵后，使用 DiskNet 对状态聚合和骨架动力学等模块进行端到端训练。所有模型的缩减率 γ 设为 50%。</p>
 <p>如表 2 所示，我们在所有拓扑结构中对 Hindmarsh-Rose 动力学进行了实验。凭借双曲空间强大的表示能力，DiskNet 确定的骨架捕捉到了节点的长期动态变化，从而在所有场景下都能获得比基线更准确的预测结果。启发式方法只考虑拓扑特征而忽略了节点动态，在某些情况下表现不如随机分配法。此外，用欧几里得空间表示节点动态以推导赋值矩阵的图集合方法无法像双曲空间那样有效地测量节点相似性和捕捉潜在的动态交互。在节点分类任务中也有类似的观察结果 [32，33]。虽然静态 RG 方法也利用双曲几何来表示节点特征，但它在计算赋值矩阵时只考虑了静态拓扑特征，而忽略了节点动态的相似性。因此，它无法识别长期动态的骨架.</p>
-<p>我们在图 4 中展示了静态 RG 方法和 DiskNet 在相同拓扑但不同动态条件下识别出的骨架，其中动态曲线代表所有节点的平均轨迹。我们使用了缩减率 γ &#x3D; 0.02% 的 500 节点 BA 网络的结果，以避免因网络规模过大而造成视觉混乱（表 1 中真实世界网络的可视化骨架见附录 D.1）。由于静态 RG 方法不考虑动态性，因此如图 4(a) 所示，三种动态下识别出的骨架是相同的。相比之下，DiskNet 在不同动力学条件下识别出的骨架存在差异。对于 FitzHugh-Nagumo 动力学（图 4(c)）和耦合罗斯勒动力学（图 4(d)），所有节点都表现出振荡行为，DiskNet 识别出的超级节点数量相似，分配模式也相似。然而，对于节点动态各异但趋势简单的 Hindmarsh-Rose 动力学，相应的骨架往往能捕捉到较少的超级节点。</p>
+<p>我们在图 4 中展示了静态 RG 方法和 DiskNet 在相同拓扑但不同动态条件下识别出的骨架，其中动态曲线代表所有节点的平均轨迹。我们使用了缩减率 γ = 0.02% 的 500 节点 BA 网络的结果，以避免因网络规模过大而造成视觉混乱（表 1 中真实世界网络的可视化骨架见附录 D.1）。由于静态 RG 方法不考虑动态性，因此如图 4(a) 所示，三种动态下识别出的骨架是相同的。相比之下，DiskNet 在不同动力学条件下识别出的骨架存在差异。对于 FitzHugh-Nagumo 动力学（图 4(c)）和耦合罗斯勒动力学（图 4(d)），所有节点都表现出振荡行为，DiskNet 识别出的超级节点数量相似，分配模式也相似。然而，对于节点动态各异但趋势简单的 Hindmarsh-Rose 动力学，相应的骨架往往能捕捉到较少的超级节点。</p>
 <p>对 DiskNet 所识别骨架的进一步分析表明，大多数超级节点与其子节点共享相同的局部邻域，但也存在子节点位置偏离的情况，尤其是在 Hindmarsh-Rose 动力学中（图 4(b)）。现有研究[14]已经证明，如果只考虑拓扑特征，在庞加莱圆盘上具有相似角度的节点应该属于同一个超级节点，而 DiskNet 则表明，如果考虑节点的动态特性，这一结论就不再成立。由于具有相似的动态特性，即使角度坐标有本质区别的节点也可能被分配到同一个超级节点中。此外，我们还观察到，具有相同角度坐标的节点可能会因为径向坐标的不同而被分配到不同的超级节点，这归因于节点度数与其动态之间的相关性[29]。最后，值得注意的是，有些超级节点只分配了少量的子节点，这将在第 4.4.1 节中进一步解释。</p>
-<p>4.3.3 Computational Cost. 在推理过程中，DiskNet 只需要对骨架上的前向 ODE 函数进行积分，与之前基于神经 ODE 的方法相比，大大节省了计算资源。我们比较了在不同拓扑结构上使用不同缩减率 γ 的 DiskNet 和其他两种基于神经 ODE 的基线方法，以衡量单样本推理的时间成本。图 5 中的结果表明，即使有超分辨率模块带来的额外计算开销，γ &#x3D; 50% 的 DiskNet 也能达到与 NDCN 相当的性能。事实上，随着网络规模的增大，网络动力学的降维潜力往往超过 50%（我们将在第 4.4.1 节中验证这一点）。因此，在预测大规模网络动态方面，DiskNet 比以往基于神经 ODE 的方法具有更高的实用价值。</p>
-<p>4.3.4 Physics-informed Initialization. 表 1 中 DiskNet 的性能基于物理信息初始化，它允许模型从良好的初始点开始学习最佳参数.我们评估了耦合罗斯勒动力学上的 DiskNet 版本：(1) 没有初始化超节点的双曲嵌入和&#x2F;或 (2) 没有预训练赋值矩阵计算模块。结果（如表 3 所示）表明，虽然在许多情况下，未进行物理初始化的 DiskNet 与基线版本相比具有竞争力，但始终不如物理初始化版本，这证明了物理初始化的必要性。</p>
+<p>4.3.3 Computational Cost. 在推理过程中，DiskNet 只需要对骨架上的前向 ODE 函数进行积分，与之前基于神经 ODE 的方法相比，大大节省了计算资源。我们比较了在不同拓扑结构上使用不同缩减率 γ 的 DiskNet 和其他两种基于神经 ODE 的基线方法，以衡量单样本推理的时间成本。图 5 中的结果表明，即使有超分辨率模块带来的额外计算开销，γ = 50% 的 DiskNet 也能达到与 NDCN 相当的性能。事实上，随着网络规模的增大，网络动力学的降维潜力往往超过 50%（我们将在第 4.4.1 节中验证这一点）。因此，在预测大规模网络动态方面，DiskNet 比以往基于神经 ODE 的方法具有更高的实用价值。</p>
+<p>4.3.4 Physics-informed Initialization. 表 1 中 DiskNet 的性能基于物理信息初始化，它允许模型从良好的初始点开始学习最佳参数.我们评估了耦合罗斯勒动力学上的 DiskNet 版本：(1) 没有初始化超节点的双曲嵌入和/或 (2) 没有预训练赋值矩阵计算模块。结果（如表 3 所示）表明，虽然在许多情况下，未进行物理初始化的 DiskNet 与基线版本相比具有竞争力，但始终不如物理初始化版本，这证明了物理初始化的必要性。</p>
 <h2 id="4-4-Sensitivity-Analysis"><a href="#4-4-Sensitivity-Analysis" class="headerlink" title="4.4 Sensitivity Analysis"></a>4.4 Sensitivity Analysis</h2><p>在本节中，我们将分析两个重要超参数（即缩减率 γ 和聚类计数 k）对 DiskNet 预测性能的影响。</p>
 <p>4.4.1 Reduction ratio. 缩减率 γ 设定了骨架中超级节点数量的上限。虽然模型会根据拓扑和动力学特性自动确定分配关系，允许一些超级节点不分配给任何子节点，但超级节点的比例不会超过 γ。我们在 BA 网络和 PowerGrid 网络中进行了耦合罗斯勒动力学测试，如图 6 所示。我们将占用率定义为在所有可用超级节点中至少分配到一个子节点的超级节点比例。观察发现，当 γ 小于 1%时，预测性能最差，占用率最高。这表明超节点的上限太低，无法确定合适的骨架。当 γ 超过 25% 时，预测性能变得相似。这既表明了网络动力学的低维特性，也表明将 γ 设为 50%一般就足够了，因为模型能够自适应地确定适当的占用率。最后，尽管两个网络都由大约 5000 个节点组成，但在相同 γ 条件下，PowerGrid 网络的占用率略高于 BA 网络。这表明，PowerGrid 电网中的耦合罗斯勒动力学具有相对较高的维度，给预测带来了更大的挑战，这与表 1 中的预测误差相对应。</p>
 <p>4.4.2 Cluster count k. 集群数 k 代表超分辨率模块中细化器的数量，与预测性能呈正相关。不过，它需要与模型的参数大小保持平衡。我们对社交网络和 Web 网络中的 FitzHugh-Nagumo 动力学进行了不同时间尺度（horizon）的预测测试，如图 7 所示。当 k 小于 7 时，k 越大，预测误差越小。但是，当 k 超过 7 时，进一步增加 k 并不能显著提高性能。因此，我们建议在一般情况下使用默认的 10 k 值，这样可以在性能和计算成本之间取得平衡。</p>
@@ -360,7 +351,8 @@
 </ul>
 <h2 id="复杂网络中的双曲几何"><a href="#复杂网络中的双曲几何" class="headerlink" title="复杂网络中的双曲几何"></a>复杂网络中的双曲几何</h2><ul>
 <li>复杂网络连接一些可区分的异质的元素，这里的异质表明所有的节点可以以某种方式进行分类。一般情况下，这些分类表明，节点在分为一大组后还可以继续分为一些小的组。这些组和子组之间可以近似看为树结构，表示网络潜在的分层结构。而我们可以将树看作离散的双曲空间，双曲空间看作连续的树结构，从纯度量意义下，两者是相同的。</li>
-<li>复杂网络的度幂律分布和聚类现象是双曲几何负曲率和度量性质的简单反映(例如，幂律度分布的指数是双曲空间曲率的函数)；<br><img src="/DiskNet/tree.png" alt="tree"><br>因此，如果假设节点属性首先具有某种度量结构，那么基于节点属性相似性的节点间距离可以映射到双曲空间中的距离。</li>
+<li>复杂网络的度幂律分布和聚类现象是双曲几何负曲率和度量性质的简单反映(例如，幂律度分布的指数是双曲空间曲率的函数)；<img src="/2024/11/13/DiskNet/tree.png" class="" title="tree">
+因此，如果假设节点属性首先具有某种度量结构，那么基于节点属性相似性的节点间距离可以映射到双曲空间中的距离。</li>
 </ul>
 
     </div>
@@ -459,7 +451,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

@@ -17,15 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="螺旋矩阵 II题目给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。  输入：n &#x3D; 3 输出：[[1,2,3],[8,9,4],[7,6,5]]  代码123456789101112131415161718192021222324252627282930313233343536373839404142434">
+  <meta name="description" content="螺旋矩阵 II题目给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。  输入：n &#x3D; 3 输出：[[1,2,3],[8,9,4],[7,6,5]]  代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546">
 <meta property="og:type" content="article">
 <meta property="og:title" content="59. spiral-matrix-ii&#x2F;description">
 <meta property="og:url" content="http://example.com/2024/12/04/leetcode59/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="螺旋矩阵 II题目给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。  输入：n &#x3D; 3 输出：[[1,2,3],[8,9,4],[7,6,5]]  代码123456789101112131415161718192021222324252627282930313233343536373839404142434">
+<meta property="og:description" content="螺旋矩阵 II题目给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。  输入：n &#x3D; 3 输出：[[1,2,3],[8,9,4],[7,6,5]]  代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-12-04T09:08:39.000Z">
 <meta property="article:modified_time" content="2024-12-04T09:10:30.000Z">
@@ -47,7 +47,7 @@
   };
 </script>
 
-  <title>59. spiral-matrix-ii/description | </title>
+  <title>59. spiral-matrix-ii/description | </title><meta name="robots" content="noindex">
   
 
 
@@ -251,12 +251,12 @@
       
         <h1 id="螺旋矩阵-II"><a href="#螺旋矩阵-II" class="headerlink" title="螺旋矩阵 II"></a>螺旋矩阵 II</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。</p>
 <ul>
-<li>输入：n &#x3D; 3</li>
+<li>输入：n = 3</li>
 <li>输出：[[1,2,3],[8,9,4],[7,6,5]]</li>
 </ul>
 <h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">generateMatrix</span>(<span class="type">int</span> n) &#123;</span><br><span class="line">        vector&lt;vector&lt;<span class="type">int</span>&gt;&gt; <span class="built_in">res</span>(n, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n, <span class="number">0</span>)); <span class="comment">// 使用vector定义一个二维数组</span></span><br><span class="line">        <span class="type">int</span> startx = <span class="number">0</span>, starty = <span class="number">0</span>; <span class="comment">// 定义每循环一个圈的起始位置</span></span><br><span class="line">        <span class="type">int</span> loop = n / <span class="number">2</span>; <span class="comment">// 每个圈循环几次，例如n为奇数3，那么loop = 1 只是循环一圈，矩阵中间的值需要单独处理</span></span><br><span class="line">        <span class="type">int</span> mid = n / <span class="number">2</span>; <span class="comment">// 矩阵中间的位置，例如：n为3， 中间的位置就是(1，1)，n为5，中间位置为(2, 2)</span></span><br><span class="line">        <span class="type">int</span> count = <span class="number">1</span>; <span class="comment">// 用来给矩阵中每一个空格赋值</span></span><br><span class="line">        <span class="type">int</span> offset = <span class="number">1</span>; <span class="comment">// 需要控制每一条边遍历的长度，每次循环右边界收缩一位</span></span><br><span class="line">        <span class="type">int</span> i,j;</span><br><span class="line">        <span class="keyword">while</span> (loop --) &#123;</span><br><span class="line">            i = startx;</span><br><span class="line">            j = starty;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 下面开始的四个for就是模拟转了一圈</span></span><br><span class="line">            <span class="comment">// 模拟填充上行从左到右(左闭右开)</span></span><br><span class="line">            <span class="keyword">for</span> (j; j &lt; n - offset; j++) &#123;</span><br><span class="line">                res[i][j] = count++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 模拟填充右列从上到下(左闭右开)</span></span><br><span class="line">            <span class="keyword">for</span> (i; i &lt; n - offset; i++) &#123;</span><br><span class="line">                res[i][j] = count++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 模拟填充下行从右到左(左闭右开)</span></span><br><span class="line">            <span class="keyword">for</span> (; j &gt; starty; j--) &#123;</span><br><span class="line">                res[i][j] = count++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// 模拟填充左列从下到上(左闭右开)</span></span><br><span class="line">            <span class="keyword">for</span> (; i &gt; startx; i--) &#123;</span><br><span class="line">                res[i][j] = count++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 第二圈开始的时候，起始位置要各自加1， 例如：第一圈起始位置是(0, 0)，第二圈起始位置是(1, 1)</span></span><br><span class="line">            startx++;</span><br><span class="line">            starty++;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// offset 控制每一圈里每一条边遍历的长度</span></span><br><span class="line">            offset += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果n为奇数的话，需要单独给矩阵最中间的位置赋值</span></span><br><span class="line">        <span class="keyword">if</span> (n % <span class="number">2</span>) &#123;</span><br><span class="line">            res[mid][mid] = count;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h1 id="Ref"><a href="#Ref" class="headerlink" title="Ref"></a>Ref</h1><p><a target="_blank" rel="noopener" href="https://programmercarl.com/0059.%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5II.html#%E6%80%9D%E8%B7%AF">代码随想录</a></p>
-
+<!-- flag of hidden posts -->
     </div>
 
     
@@ -273,16 +273,6 @@
 
 
         
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2024/12/04/leetcode76/" rel="prev" title="76： minimum-window-substring">
-      <i class="fa fa-chevron-left"></i> 76： minimum-window-substring
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/12/05/kamacoder58/" rel="next" title="kamacoder58. 区间和">
-      kamacoder58. 区间和 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
       </footer>
     
   </article>
@@ -356,7 +346,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
