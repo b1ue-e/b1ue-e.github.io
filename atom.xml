@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2024-12-17T06:49:10.000Z</updated>
+  <updated>2025-07-09T02:52:09.305Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>rjina-一个markdown网页的工具</title>
+    <link href="http://example.com/2025/07/09/rjina/"/>
+    <id>http://example.com/2025/07/09/rjina/</id>
+    <published>2025-07-09T02:36:47.000Z</published>
+    <updated>2025-07-09T02:52:09.305Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="简单用法"><a href="#简单用法" class="headerlink" title="简单用法"></a>简单用法</h1><p><a href="https://r.jina.ai/">https://r.jina.ai/</a>+URL就可以将网页内容Markdown下来。</p><p>这里我以我自己博客内容为例。</p><p><a href="https://b1ue-e.github.io/2024/11/19/NSGA-II/#more">多目标遗传算法</a></p><p>只需要将网页的URL加在后面即可，如：<a href="">https://r.jina.ai/https://b1ue-e.github.io/2024/11/19/NSGA-II/#more</a></p><p>效果如图</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">Title: 多目标遗传算法NSGA-II实现</span><br><span class="line"></span><br><span class="line">URL Source: https://b1ue-e.github.io/2024/11/19/NSGA-II/</span><br><span class="line"></span><br><span class="line">Published Time: 2024-11-19T02:30:54.000Z</span><br><span class="line"></span><br><span class="line">Markdown Content:</span><br><span class="line"><span class="section">[](<span class="link">https://b1ue-e.github.io/2024/11/19/NSGA-II/#INTRODUCTION &quot;INTRODUCTION&quot;</span>)INTRODUCTION</span></span><br><span class="line"><span class="section">----------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line">非支配排序遗传算法（NSGA-II）是一种多目标优化算法，它通过在遗传算法的基础上引入非支配排序和拥挤度计算，以平衡多目标优化问题中的多个目标。NSGA-II是遗传算法的一种改进版本，它在遗传算法的基础上引入了<span class="strong">**非支配排序和拥挤度**</span>计算，以平衡多目标优化问题中的多个目标。本文将简要介绍NSGA-II的关键点和实现。</span><br><span class="line"></span><br><span class="line"><span class="section">[](<span class="link">https://b1ue-e.github.io/2024/11/19/NSGA-II/#%E9%9D%9E%E6%94%AF%E9%85%8D%E6%8E%92%E5%BA%8F &quot;非支配排序&quot;</span>)非支配排序</span></span><br><span class="line"><span class="section">-----------------------------------------------------------------------------------------------------------</span></span><br><span class="line"></span><br><span class="line"><span class="section">### [](<span class="link">https://b1ue-e.github.io/2024/11/19/NSGA-II/#%E6%94%AF%E9%85%8D%E5%92%8C%E9%9D%9E%E6%94%AF%E9%85%8D%E5%85%B3%E7%B3%BB &quot;支配和非支配关系&quot;</span>)支配和非支配关系</span></span><br><span class="line"></span><br><span class="line">设p和q是两个解，称p支配q，当且仅当，1. 对于所有的子目标，p的目标值都不劣于q的目标值；2. 至少有一个子目标，p的目标值优于q的目标值。</span><br><span class="line"></span><br><span class="line"><span class="section">### [](<span class="link">https://b1ue-e.github.io/2024/11/19/NSGA-II/#%E9%9D%9E%E6%94%AF%E9%85%8D%E6%8E%92%E5%BA%8F-1 &quot;非支配排序&quot;</span>)非支配排序</span></span><br><span class="line"></span><br><span class="line"><span class="emphasis">_Non-dominated Sorting_</span> 是一种用于多目标优化的排序算法，它将解按照支配关系划分为多个非支配集合。</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span>   初始化：将所有解放入一个初始非支配集合中。</span><br><span class="line"><span class="bullet">2.</span>   对每个解计算两个属性：（1）:解 被其他解支配的次数；（2）:解 支配的解的集合。</span><br><span class="line"><span class="bullet">3.</span>   然后找到 的解，将其放入一个新的集合 中，此时 的等级为1</span><br><span class="line"><span class="bullet">4.</span>   对 中的每个解 ，将其从 中删除，然后对 中的每个解 ，计算 ，如果 ，则将其放入 中，此时 的等级为2。依此类推，直至所有解被分类。</span><br><span class="line"><span class="section">### [](<span class="link">https://b1ue-e.github.io/2024/11/19/NSGA-II/#%E5%AE%9E%E7%8E%B0 &quot;实现&quot;</span>)实现</span></span><br></pre></td></tr></table></figure><h2 id="Refs"><a href="#Refs" class="headerlink" title="Refs"></a>Refs</h2><p><a href="https://linux.do/t/topic/774655">liangdabiao的帖子</a></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;简单用法&quot;&gt;&lt;a href=&quot;#简单用法&quot; class=&quot;headerlink&quot; title=&quot;简单用法&quot;&gt;&lt;/a&gt;简单用法&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://r.jina.ai/&quot;&gt;https://r.jina.ai/&lt;/a&gt;+URL就可以将网页内</summary>
+      
+    
+    
+    
+    
+    <category term="-- toy" scheme="http://example.com/tags/toy/"/>
+    
+  </entry>
   
   <entry>
     <title>1047. remove-all-adjacent-duplicates-in-string</title>
@@ -475,28 +497,6 @@
       
       
     <summary type="html">&lt;h1 id=&quot;有效的完全平方数&quot;&gt;&lt;a href=&quot;#有效的完全平方数&quot; class=&quot;headerlink&quot; title=&quot;有效的完全平方数&quot;&gt;&lt;/a&gt;有效的完全平方数&lt;/h1&gt;&lt;h2 id=&quot;题目&quot;&gt;&lt;a href=&quot;#题目&quot; class=&quot;headerlink&quot; titl</summary>
-      
-    
-    
-    
-    <category term="leetcode" scheme="http://example.com/categories/leetcode/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>283. move-zeroes</title>
-    <link href="http://example.com/2024/11/27/leetcode283/"/>
-    <id>http://example.com/2024/11/27/leetcode283/</id>
-    <published>2024-11-27T09:06:47.000Z</published>
-    <updated>2024-11-27T09:07:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="移动零"><a href="#移动零" class="headerlink" title="移动零"></a>移动零</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>给定一个数组 nums，编写一个函数将所有 0 移动到数组的末尾，同时保持非零元素的相对顺序。</p><p>请注意 ，必须在不复制数组的情况下原地对数组进行操作。</p><p><a href="https://leetcode.cn/problems/move-zeroes/">题目链接</a></p><p>示例 1:</p><ul><li>输入: nums = [0,1,0,3,12]</li><li>输出: [1,3,12,0,0]</li></ul><p>示例 2:</p><ul><li>输入: nums = [0]</li><li>输出: [0]</li></ul><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>快慢指针，快指针获取不是0的值赋给慢指针指向的数组下标<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">moveZeroes</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify nums in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        slow = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> fast <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> fast != <span class="number">0</span>:</span><br><span class="line">                nums[slow] = fast</span><br><span class="line">                slow +=<span class="number">1</span></span><br><span class="line">        <span class="keyword">while</span> slow &lt; <span class="built_in">len</span>(nums):</span><br><span class="line">            nums[slow] = <span class="number">0</span></span><br><span class="line">            slow +=<span class="number">1</span></span><br><span class="line">        </span><br></pre></td></tr></table></figure></p><!-- flag of hidden posts -->]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;移动零&quot;&gt;&lt;a href=&quot;#移动零&quot; class=&quot;headerlink&quot; title=&quot;移动零&quot;&gt;&lt;/a&gt;移动零&lt;/h1&gt;&lt;h2 id=&quot;题目&quot;&gt;&lt;a href=&quot;#题目&quot; class=&quot;headerlink&quot; title=&quot;题目&quot;&gt;&lt;/a&gt;题目&lt;/h2&gt;&lt;p</summary>
       
     
     
